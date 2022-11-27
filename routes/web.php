@@ -17,7 +17,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/turnos', [\App\Http\Controllers\TurnosController::class, 'index']);
-Route::get('/admin/home', function () {
+// -------- TURNOS --------
+Route::get('/turnos', [
+    \App\Http\Controllers\TurnosController::class, 'index'
+]);
+
+
+// -------- PACIENTES --------
+Route::get('/pacientes', [
+    \App\Http\Controllers\PacientesController::class, 'index'
+])-> name('paciente.index');
+
+
+// -------- ADMIN --------
+Route::get('/admin', function() {
     return view('admin');
 });

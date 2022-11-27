@@ -18,6 +18,7 @@
     <table class="table">
         <thead>
         <tr>
+{{--            fecha_turno, horario, paciente, doctor, especialidad--}}
             <th>Fecha</th>
             <th>Horario</th>
             <th>Paciente</th>
@@ -29,21 +30,20 @@
         </thead>
 
         <tbody>
-            @foreach($turnos as $turno)
-                <tr>
-                    <td>{{ $turno -> fecha_turno }}</td>
-                    <td>{{ $turno -> horario }}</td>
-                    <td>{{ $turno -> paciente }}</td>
-                    <td>{{ $turno -> doctor }}</td>
-                    <td>{{ $turno -> especialidad }}</td>
-                    <td>{{ $turno -> estado }}</td>
-                    <td class="acciones">
-                        <button class="btn btn-outline-primary">Admitir</button>
-                        <button class="btn btn-primary">Editar</button>
-                        <button class="btn btn-danger">Cancelar</button>
-                    </td>
-                </tr>
-            @endforeach
+        @foreach($turnos as $turno)
+            <tr>
+                <td>{{ $turno -> fecha_turno }}</td>
+                <td>{{ $turno -> horario }}</td>
+                <td>{{ $turno -> paciente }}</td>
+                <td>{{ $turno -> doctor }}</td>
+                <td>{{ $turno -> especialidad }}</td>
+                <td>{{ $turno -> estado }}</td>
+                <td class="acciones">
+                    <button>Editar</button>
+                    <button>Cancelar</button>
+                </td>
+            </tr>
+        @endforeach
         </tbody>
     </table>
 </main>

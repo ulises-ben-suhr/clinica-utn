@@ -10,34 +10,9 @@
 </head>
 <body>
 
-<main class="container py-2 " >
+<main class="container py-2">
 
-    <form action="" method="" class="card p-3 bg-light">
 
-        <fieldset class="card p-4 mb-3">
-            <legend>Datos del paciente</legend>
-            <label for="nombrePaciente" class="form-label">Nombre y apellido</label>
-            <input type="text" placeholder="Ej: Escudero Jorge" name="nombrePaciente" id="nombrePaciente">
-        </fieldset>
-
-        <fieldset class="card p-4 mb-3">
-            <legend>Datos del médico</legend>
-            <label for="nombreMedico" class="form-label">Nombre y apellido</label>
-            <input type="text" placeholder="Ej: Rojas Verónica" name="nombreMedico" id="nombreMedico">
-            <label for="especialidadMedica" class="form-label">Especialidad</label>
-            <input type="text" placeholder="Ej: Nefrologia" name="especialidadMedica" id="especialidadMedica">
-        </fieldset>
-
-        <fieldset class="card p-4 mb-3">
-            <legend>Datos del turno</legend>
-            <label for="fechaTurno" class="form-label">Fecha</label>
-            <input type="text" placeholder="Ej: 14/11/2022" name="fechaTurno" id="fechaTurno">
-            <label for="horarioTurno" class="form-label">Horario</label>
-            <input type="text" placeholder="Ej: 10:30" name="horarioTurno" id="horarioTurno">
-        </fieldset>
-
-        <button type="submit" class="btn btn-primary">Nuevo turno</button>
-    </form>
 
 </main>
 

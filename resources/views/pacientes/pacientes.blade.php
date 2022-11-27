@@ -10,5 +10,25 @@
 </head>
 <body>
 
+<table>
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>DNI</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    @foreach($pacientes as $paciente)
+        <tr>
+            <td>{{$paciente -> nombre}}</td>
+            <td>{{$paciente -> apellido}}</td>
+            <td>{{$paciente -> dni}}</td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
+
 </body>
 </html>
