@@ -8,21 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class TurnosController extends Controller
 {
-//     private $turnos = [];
-//     public function __construct() {
-//         $unTurno = new Turno();
-//         $unTurno -> setId("143");
-//         $unTurno -> setFechaTurno("24/11/2022");
-//         $unTurno -> setHorario("15:00");
-//         $unTurno -> setPaciente("Robles Valentina");
-//         $unTurno -> setDoctor("Berton Nicolás");
-//         $unTurno -> setFechaSolicitud("14/11/2022");
-//         $unTurno -> setEspecialidad("Cardiología");
-//         $unTurno -> setEstado("Activo");
-//
-//         array_push($this->turnos, $unTurno);
-//     }
-
     /**
      * Display a listing of the resource.
      *
@@ -45,7 +30,7 @@ class TurnosController extends Controller
      */
     public function create()
     {
-        //
+        return view('/turnos/nuevoTurno');
     }
 
     /**

@@ -12,7 +12,11 @@
 
 <main class="container py-2">
 
-
+    <form action="{{ url('/pacientes/search') }}">
+        <label for="dni">Buscar paciente:</label>
+        <input type="search" name="dni" id="dni" placeholder="Ingrese DNI del paciente">
+        <input type="submit" value="Buscar!">
+    </form>
 
 </main>
 
