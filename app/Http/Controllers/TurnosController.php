@@ -28,9 +28,14 @@ class TurnosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $paciente)
     {
-        return view('/turnos/nuevoTurno');
+//        dd($paciente); die();
+        return view('/turnos/nuevoTurno', [
+            'nombre' => $paciente -> query('nombre'),
+            'apellido'=> $paciente -> query('apellido'),
+            'dni' => $paciente -> query('dni')
+        ]);
     }
 
     /**

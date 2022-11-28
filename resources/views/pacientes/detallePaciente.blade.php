@@ -67,7 +67,11 @@
         @if(isset($paciente)) <input type="submit" value="Editar"> @endif
         @if(!isset($paciente)) <input type="submit" value="Alta"> @endif
 
-        <a href="{{ route('turno.create') }}">Dar turno</a>
+        <a href="{{ route('turno.create', [
+            'nombre' => $paciente -> nombre,
+            'apellido' => $paciente -> apellido,
+            'dni' => $paciente -> dni
+        ]) }}">Dar turno</a>
 
     @if(!isset($paciente)) </form> @endif
     @if(isset($paciente)) </form> @endif

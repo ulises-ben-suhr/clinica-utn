@@ -27,6 +27,11 @@ class Doctor
     private $especialidad2;
     private $obraSocialFK;
 
+    /*
+     * private $diasAtencionn;
+     * private $horariosAtencion;
+    */
+
     /****  SETTERS  ****/
 
     public function setId($id) {
