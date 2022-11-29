@@ -55,7 +55,7 @@
         </fieldset>
 
         {{--
-            Este botón de editar no está funcionando
+            Este botón de editar no está funcionando -> Probar a hacerlo con un <a>
             Al clickearlo deberían pasar varias cosas
             1. Habilitar todos los campos de texto para escribir
             2. No perder el contenido de los campos al habilitarlos
@@ -67,11 +67,11 @@
         @if(isset($paciente)) <input type="submit" value="Editar"> @endif
         @if(!isset($paciente)) <input type="submit" value="Alta"> @endif
 
-        <a href="{{ route('turno.create', [
+        @if(isset($paciente))<a href="{{ route('turno.create', [
             'nombre' => $paciente -> nombre,
             'apellido' => $paciente -> apellido,
             'dni' => $paciente -> dni
-        ]) }}">Dar turno</a>
+        ]) }}">Dar turno</a>@endif
 
     @if(!isset($paciente)) </form> @endif
     @if(isset($paciente)) </form> @endif

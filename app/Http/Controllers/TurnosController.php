@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\entities\Turno;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -32,9 +33,9 @@ class TurnosController extends Controller
     {
 //        dd($paciente); die();
         return view('/turnos/nuevoTurno', [
-            'nombre' => $paciente -> query('nombre'),
-            'apellido'=> $paciente -> query('apellido'),
-            'dni' => $paciente -> query('dni')
+            'nombre' => $paciente -> get('nombre'),
+            'apellido'=> $paciente -> get('apellido'),
+            'dni' => $paciente -> get('dni')
         ]);
     }
 
@@ -46,7 +47,27 @@ class TurnosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            DB::transaction(function() use($request) {
+                DB::insert(
+                    'INSERT into turnos (fecha_turno, horario, paciente, doctor, fecha_solicitud, estado, especialidad, dni_paciente)
+                    values (?,?,?,?,?,?,?,?)', [
+                        $request -> post('fecha_turno'),
+                        $request -> post('horario'),
+                        "{$request -> query('apellido')}_{$request -> query('nombre')}",
+                        $request -> post('profesional'),
+                        Carbon::now() -> toDateString(),
+                        'activo',
+                        $request -> post('especialidad'),
+                        $request -> query('dni')
+                    ]
+                );
+            });
+            redirect(route('turno.index'));
+        }
+        catch (\Exception $exception) {
+            dd($exception);
+        }
     }
 
     /**

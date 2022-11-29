@@ -22,12 +22,15 @@ Route::get('/', function () {
 // -------- TURNOS --------
 Route::get('/turnos', [
     \App\Http\Controllers\TurnosController::class, 'index'
-]);
+]) -> name('turno.index');
 
 Route::get('/turnos/create', [
     \App\Http\Controllers\TurnosController::class, 'create'
 ]) -> name('turno.create');
 
+Route::post('/turnos', [
+    \App\Http\Controllers\TurnosController::class, 'store'
+]) -> name('turno.store');
 
 
 // -------- PACIENTES --------
@@ -55,4 +58,10 @@ Route::put('/paciente', [
 // -------- ADMIN --------
 Route::get('/admin', function() {
     return view('admin');
+});
+
+
+// -------- PRUEBAS --------
+Route::get('/hora', function () {
+    return \Carbon\Carbon:: now() -> toDateString();
 });

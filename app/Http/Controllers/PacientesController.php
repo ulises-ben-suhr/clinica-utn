@@ -30,12 +30,12 @@ class PacientesController extends Controller
         ]);
     }
 
-    public function store(Request $request) {
+    public function store(Request $request, $dni) {
         try {
             DB::transaction(function() use($request) {
                 DB::insert(
                     'INSERT INTO pacientes (nombre, apellido, dni, direccion, telefono1, email, categoria_os, numero_afiliado)
-            values (?, ?, ?, ?, ?, ?, ?, ?)', [
+                        values (?, ?, ?, ?, ?, ?, ?, ?)', [
                         $request -> post('nombre'),
                         $request -> post('apellido'),
                         $request -> post('dni'),
@@ -50,7 +50,7 @@ class PacientesController extends Controller
             redirect(route('paciente.index'));
         }
         catch (\Exception $exception) {
-
+            dd($exception);
         }
     }
 

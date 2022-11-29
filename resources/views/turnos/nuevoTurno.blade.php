@@ -10,8 +10,8 @@
 </head>
 <body id="body">
 
-<form action="" method="POST">
-
+<form action="{{ route('turno.store', ['nombre' => $nombre, 'apellido' => $apellido, 'dni' => $dni]) }}" method="POST">
+    @csrf
     <fieldset>
         <legend>Datos del paciente:</legend>
         <label for="nombre">Nombre: </label>
@@ -25,9 +25,9 @@
     <fieldset>
         <legend>Datos del turno:</legend>
 
-        <label for="especialidad">Especialidad:</label>
+        <label for="especialidad">Especialidad: (*)</label>
         <select name="especialidad" id="especialidad">
-            <option value="null" selected>Elija una opción</option>
+            <option value="" disabled selected>Elija una opción</option>
             <option value="cardiologia">cardiologia</option>
             <option value="dermatologia">dermatologia</option>
             <option value="endocrinologia">endocrinologia</option>
@@ -50,25 +50,27 @@
             <option value="urologia">urologia</option>
         </select>
 
-        <label class="d-none" for="profesional">Especialista:</label>
+        <label class="d-none" for="profesional">Especialista: (*)</label>
         <select class="d-none" name="profesional" id="profesional">
+            <option value="" disabled selected>Elija una opción</option>
         </select>
 
-        <label class="d-none" for="fecha_turno">Fecha:</label>
+        <label class="d-none" for="fecha_turno">Fecha: (*)</label>
         <input class="d-none" type="date" name="fecha_turno" id="fecha_turno">
 
-        <label class="d-none" for="horario">Hora:</label>
-        <input class="d-none" type="time" name="horario" id="horario">
-
-        {{-- TODO --}}
+        {{-- La selección de horario se puede hacer de dos formas --}}
         {{--
-            1. Poner la opción estandar en el HTML y no en JS
-            2. Implementar los días disponibles
-            3. Implementar las horas disponibles
-            4. Finalizar el alta de turnos
-         --}}
-
+            1. Con un select
+            2. Con varios radio buttons
+            * Ambos deben recibir los datos pertinentes con JS
+        --}}
+        <label class="d-none" for="horario">Hora: (*)</label>
+        <input class="d-none" type="time" name="horario" id="horario">
     </fieldset>
+
+    <p>Los campos marcados con (*) son obligatorios</p>
+
+    <input type="submit" value="Agendar!">
 </form>
 
 
@@ -145,8 +147,8 @@
             ["osde"]
         ),
 
-        new Profesional("berta",
-            "suhr",
+        new Profesional("celeste",
+            "fuentes",
             "63058",
             "dermatologia",
             ["lunes", "martes", "miercoles", "jueves", "viernes"],
@@ -159,7 +161,7 @@
             ],
             ["osde"]),
         new Profesional("rafael",
-            "rios",
+            "davio",
             "50543",
             "dermatologia",
             ["martes", "miercoles", "sabado"],
@@ -201,9 +203,6 @@
         /*
         * Ponemos cada médico como opción a elegir
          */
-        let placeholder = document.createElement('option');
-        placeholder.innerText = 'Seleccione una opción';
-        profesional.appendChild(placeholder);
         medicos.forEach(medico => {
             let opcion = document.createElement('option');
             opcion.innerText = medico;
