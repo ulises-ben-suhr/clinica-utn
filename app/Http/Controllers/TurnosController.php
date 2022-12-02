@@ -54,7 +54,7 @@ class TurnosController extends Controller
                     values (?,?,?,?,?,?,?,?)', [
                         $request -> post('fecha_turno'),
                         $request -> post('horario'),
-                        "{$request -> query('apellido')}_{$request -> query('nombre')}",
+                        "{$request -> query('apellido')} {$request -> query('nombre')}",
                         $request -> post('profesional'),
                         Carbon::now() -> toDateString(),
                         'activo',
