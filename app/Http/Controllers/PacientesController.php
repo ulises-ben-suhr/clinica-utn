@@ -30,7 +30,7 @@ class PacientesController extends Controller
         ]);
     }
 
-    public function store(Request $request, $dni) {
+    public function store(Request $request) {
         try {
             DB::transaction(function() use($request) {
                 DB::insert(
