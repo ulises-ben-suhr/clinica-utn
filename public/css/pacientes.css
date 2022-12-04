@@ -1,0 +1,37 @@
+@font-face {
+    font-family: sourceBold;
+    src: url('../fonts/ssp/SourceSansPro-Bold.ttf');
+}
+
+@font-face {
+    font-family: sourceRegular;
+    src: url('../fonts/ssp/SourceSansPro-Regular.ttf');
+}
+
+.border-15{
+    border: 15px solid #EDEDED;
+}
+
+.border-14{
+    border: 14px solid #EDEDED;
+}
+
+.sansbold{
+    font-family: sourceBold;
+}
+
+.sansRegular{
+    font-family: sourceRegular;
+}
+
+.outline-0{
+    outline: none;
+}
+
+.text-color-gray{
+    color: #333;
+}
+
+.h-42{
+    height: 42px;
+}
