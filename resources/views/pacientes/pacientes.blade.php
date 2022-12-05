@@ -49,8 +49,8 @@
         <thead>
           <tr>
             <th scope="col">Nombre</th>
-            <th scope="col">DNI</th>
-            <th scope="col">Consultas</th>
+            <th scope="col" class="d-none d-sm-table-cell">DNI</th>
+            <th scope="col" class="d-none d-sm-table-cell">Consultas</th>
             <th scope="col">Acciones</th>
           </tr>
         </thead>
@@ -58,20 +58,27 @@
             @foreach($pacientes as $paciente)
                 <tr>
                     <td class="align-middle text-primary sansRegular">
-                            {{$paciente -> nombre}} {{$paciente -> apellido}}
+                        <a href="{{ route('pacientes.show', $paciente->dni) }}"
+                            class="text-decoration-none">{{$paciente -> nombre}} {{$paciente -> apellido}}</a>
                     </td>
 
-                    <td class="align-middle text-color-gray sansRegular">{{$paciente -> dni}}</td>
+                    <td class="align-middle text-color-gray sansRegular d-none d-sm-table-cell">{{$paciente -> dni}}</td>
 
-                    <td class="align-middle position-relative">
-                        <button class="btn btn-turno btn-primary  sansbold py-0 px-2 rounded-1 d-flex align-items-center">
+                    <td class="align-middle position-relative d-none d-sm-table-cell">
+                        <button class=" btn btn-turno btn-primary  sansbold py-0 px-2 rounded-1 d-flex align-items-center">
                             <img src="./images/calendar.svg" alt="" srcset="" class="me-2">
                             Turnos
                         </button>
                         <nav class="nav-turnos position-absolute top-40 bg-light d-none">
                             <div class="list-group">
-                                <button type="button" class="list-group-item list-group-item-action">Programar turno</button>
-                                <button type="button" class="list-group-item list-group-item-action">Listado de turnos</button>
+                                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
+                                    <img src="./images/calendario_plus.svg"  alt="" srcset="">
+                                    Programar turno
+                                </button>
+                                <button type="button" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
+                                    <img src="./images/list.svg"  alt="" srcset="">
+                                    Listado de turnos
+                                </button>
                             </div>
                         </nav>
                     </td>
