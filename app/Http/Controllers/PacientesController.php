@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\entities\Paciente;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PacientesController extends Controller
 {
-    public function index() {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
         $pacientes = DB::select(
             'SELECT nombre, apellido, dni FROM pacientes'
         );
@@ -17,20 +22,24 @@ class PacientesController extends Controller
         ]);
     }
 
-    public function search(Request $request) {
-        $busqueda = $request -> input('dni');
-
-        $pacienteBuscado = DB::selectOne(
-            'SELECT nombre, apellido, dni, direccion, telefono1, email, categoria_os, numero_afiliado
-            FROM pacientes
-            WHERE dni = ?', [$busqueda]
-        );
-        return view('/pacientes/detallePaciente', [
-            'paciente' => $pacienteBuscado
-        ]);
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('pacientes.detallePaciente');
     }
 
-    public function store(Request $request) {
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
         try {
             DB::transaction(function() use($request) {
                 DB::insert(
@@ -47,14 +56,53 @@ class PacientesController extends Controller
                     ]
                 );
             });
-            redirect(route('paciente.index'));
+            redirect(route('pacientes.index'));
         }
         catch (\Exception $exception) {
             dd($exception);
         }
     }
 
-    public function update(Request $request) {
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($dni)
+    {
+        $busqueda = $dni;
+
+        $pacienteBuscado = DB::selectOne(
+            'SELECT nombre, apellido, dni, direccion, telefono1, email, categoria_os, numero_afiliado
+            FROM pacientes
+            WHERE dni = ?', [$busqueda]
+        );
+        return view('/pacientes/detallePaciente', [
+            'paciente' => $pacienteBuscado
+        ]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
         try {
             DB::transaction(function() use($request) {
                 DB::update(
@@ -76,12 +124,33 @@ class PacientesController extends Controller
                     ]
                 );
             });
-            redirect(route('paciente.index'));
+            redirect(route('pacientes.index'));
         }
         catch(\Exception $exception) {
         }
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        //
+    }
 
+    public function search(Request $request) {
+        $busqueda = $request -> input('dni');
 
+        $pacienteBuscado = DB::selectOne(
+            'SELECT nombre, apellido, dni, direccion, telefono1, email, categoria_os, numero_afiliado
+            FROM pacientes
+            WHERE dni = ?', [$busqueda]
+        );
+        return view('/pacientes/detallePaciente', [
+            'paciente' => $pacienteBuscado
+        ]);
+    }
 }

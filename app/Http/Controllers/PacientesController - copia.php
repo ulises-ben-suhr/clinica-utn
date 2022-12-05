@@ -47,7 +47,7 @@ class PacientesController extends Controller
                     ]
                 );
             });
-            redirect(route('paciente.index'));
+            redirect(route('pacientes.index'));
         }
         catch (\Exception $exception) {
             dd($exception);

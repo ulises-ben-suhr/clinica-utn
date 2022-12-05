@@ -30,14 +30,14 @@
                 </div>
             </div>
 
-            <form class="col-11 col-md-6 col-xxl-5 p-2 mx-3 d-flex align-items-center justify-content-center" action="{{ url('/pacientes/search') }}" method="GET">
+            <form class="col-11 col-md-6 col-xxl-5 p-2 mx-3 d-flex align-items-center justify-content-center" action="{{ route('paciente.search') }}" method="GET">
                 <input class="w-100 p-2 outline-0 border border-secondary" type="search" name="dni" id="dni" placeholder="Ingrese DNI del paciente">
                 <input class="btn h-42 lh-0 px-5 fs-5 rounded-0  btn-primary sansbold text-with" type="submit" value="Buscar">
             </form>
         </section>
 
         <section class="row justify-content-between my-4 align-items-center ">
-            <a href="" class=" col-11 col-md-auto rounded-0 text-center d-flex align-items-center justify-content-center btn btn-success mx-3 sansbold">Añadir un nuevo paciente</a>
+            <a href="{{ route('pacientes.create') }}" class=" col-11 col-md-auto rounded-0 text-center d-flex align-items-center justify-content-center btn btn-success mx-3 sansbold">Añadir un nuevo paciente</a>
             <nav aria-label="..." class="col-11 col-md-6 col-xxl-5 p-2 mx-3 d-flex align-items-center" >
                 1.2.3.4.5.6.7.8.9.10
             </nav>
@@ -60,24 +60,33 @@
                     <td class="align-middle text-primary sansRegular">
                             {{$paciente -> nombre}} {{$paciente -> apellido}}
                     </td>
+
                     <td class="align-middle text-color-gray sansRegular">{{$paciente -> dni}}</td>
-                    <td class="align-middle">
-                        <button class="btn btn-primary  sansbold py-0 px-2 rounded-1 d-flex align-items-center">
-                        <img src="./images/calendar.svg" alt="" srcset="" class="me-2">
+
+                    <td class="align-middle position-relative">
+                        <button class="btn btn-turno btn-primary  sansbold py-0 px-2 rounded-1 d-flex align-items-center">
+                            <img src="./images/calendar.svg" alt="" srcset="" class="me-2">
                             Turnos
                         </button>
+                        <nav class="nav-turnos position-absolute top-40 bg-light d-none">
+                            <div class="list-group">
+                                <button type="button" class="list-group-item list-group-item-action">Programar turno</button>
+                                <button type="button" class="list-group-item list-group-item-action">Listado de turnos</button>
+                            </div>
+                        </nav>
                     </td>
+
                     <td >
                         <div class="d-lg-flex gap-3 d-none ">
-                            <button class="btn btn-primary sansbold py-0 ps-1 pe-2 rounded-1 d-flex align-items-center">
+                            <a href="{{ route('pacientes.show', $paciente->dni) }}" class="btn btn-primary sansbold py-0 ps-1 pe-2 rounded-1 d-flex align-items-center">
                                 <img src="./images/eye.svg" alt="" srcset="" class="me-2">
                                     Ver
-                            </button>
+                            </a>
 
-                            <button class="btn btn-primary sansbold py-0 pe-2 rounded-1 d-flex align-items-center">
+                            <a href="#" class="btn btn-primary sansbold py-0 pe-2 rounded-1 d-flex align-items-center">
                                 <img src="./images/edit.svg" alt="" srcset="" class="me-2">
                                     Modificar
-                            </button>
+                            </a>
 
                             <button class="btn btn-danger sansbold py-0 pe-2 rounded-1 d-flex align-items-center">
                                 <img src="./images/trash.svg" alt="" srcset="" class="me-2">
@@ -102,7 +111,9 @@
 
 @endsection
 
-
+@section('scripts')
+    <script src="./js/menuTurnos.js"></script>
+@endsection
 
 {{-- </body>
 </html> --}}

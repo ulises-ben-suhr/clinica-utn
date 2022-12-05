@@ -35,3 +35,10 @@
 .h-42{
     height: 42px;
 }
+
+
+/* BLOQUES */
+
+.nav-turnos{
+    z-index: 10;
+}

@@ -34,26 +34,18 @@ Route::post('/turnos', [
 
 
 // -------- PACIENTES --------
-Route::get('/pacientes', [
-    \App\Http\Controllers\PacientesController::class, 'index'
-])-> name('paciente.index');
+
+
+Route::resource('pacientes', \App\Http\Controllers\PacientesController::class)
+    ->only(['index','store','update','show','create']);
 
 // Este search busca un DNI de paciente en la DB
 // Si encuentra el DNI devuelve un formulario con todos los datos
 // Si no lo encuentra devuelve el formulario vacío para cargarlo con datos nuevos
+
 Route::get('/pacientes/search', [
     \App\Http\Controllers\PacientesController::class, 'search'
 ]) -> name('paciente.search');
-
-Route::post('/pacientes', [
-    \App\Http\Controllers\PacientesController::class, 'store'
-]) -> name('paciente.store');
-
-// Esto no está funcionando -> Es el botón para editar los datos de un paciente
-Route::put('/paciente', [
-    \App\Http\Controllers\PacientesController::class, 'update'
-]) -> name('paciente.update');
-
 
 // -------- ADMIN --------
 Route::get('/admin', function() {
