@@ -1,5 +1,9 @@
+body {
+    overflow-x: clip;
+}
+
 .logo {
-    height: 64px;
+    height: clamp(32px, 2.5vw, 64px);
 }
 
 .logo-small {
