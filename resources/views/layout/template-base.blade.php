@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\URL::asset('css/generales-inicio.css') }}">
     @stack('home-styles')
     @stack('services-styles')
+    @stack('institucional-styles')
 
 </head>
 <body>
@@ -26,7 +27,7 @@
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="{{ route('home.view') }}" class="nav-link px-2 link-dark">inicio</a></li>
             <li><a href="{{ route('servicios.view') }}" class="nav-link px-2 link-dark">servicios</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">institucional</a></li>
+            <li><a href="{{ route('institucional.view') }}" class="nav-link px-2 link-dark">institucional</a></li>
             <li><a href="#" class="nav-link px-2 link-dark">contacto</a></li>
         </ul>
 

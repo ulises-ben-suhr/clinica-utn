@@ -35,27 +35,27 @@
 
         <div class="valores_descripcion">
             <div class="descripcion_card">
-                <img class="card_imagen" src="{{ \Illuminate\Support\Facades\URL::asset('images/aprecio.svg') }}" alt="">
+                <img class="card_imagen" src="{{ \Illuminate\Support\Facades\URL::asset('images/assets/aprecio.svg') }}" alt="aprecio">
                 <h3 class="card_titulo">Hospitalidad</h3>
                 <p class="card_texto">Acojer incondicionalmente a las personas, respetando su dignidad, cuidando y promoviendo integramente su vida</p>
             </div>
 
             <div class="descripcion_card">
-                <img class="card_imagen" src="{{ \Illuminate\Support\Facades\URL::asset('images/doctores.svg') }}" alt="">
+                <img class="card_imagen" src="{{ \Illuminate\Support\Facades\URL::asset('images/assets/doctores.svg') }}" alt="doctores">
                 <h3 class="card_titulo">Calidad</h3>
                 <p class="card_texto">Es la base escencial de nuestro servicio, involucra la excelencia, profesionalidad, atención y
                     conciencia de las necesidades de la comunidad</p>
             </div>
 
             <div class="descripcion_card">
-                <img class="card_imagen" src="{{ \Illuminate\Support\Facades\URL::asset('images/cientifica.svg') }}" alt="">
+                <img class="card_imagen" src="{{ \Illuminate\Support\Facades\URL::asset('images/assets/cientifica.svg') }}" alt="cientifica">
                 <h3 class="card_titulo">Responsabilidad</h3>
                 <p class="card_texto">Representa un criterio funcamental para nuestro servicio y nuestra gestión, asumir el rol activo en
                     la labor diaria.</p>
             </div>
 
             <div class="descripcion_card">
-                <img class="card_imagen" src="{{ \Illuminate\Support\Facades\URL::asset('images/seguridad.svg') }}" alt="">
+                <img class="card_imagen" src="{{ \Illuminate\Support\Facades\URL::asset('images/assets/seguridad.svg') }}" alt="seguridad">
                 <h3 class="card_titulo">Compromiso</h3>
                 <p class="card_texto">Desarrollar las tareas enfocando el esfuerzo en brindar atención de calidad a nuestros pacientes y
                     sus familiares, mantener una conducta transparente y un accionar honesto</p>
