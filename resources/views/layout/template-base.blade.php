@@ -32,7 +32,7 @@
         </ul>
 
         <div id="registro" class="col-md-3 text-end">
-            <button type="button" class="btn btn-outline-primary me-2">ingresar</button>
+            <a href="{{ route('login.index') }}" class="btn btn-outline-primary me-2">ingresar</a>
             <button type="button" class="btn btn-primary">registrarse</button>
         </div>
     </header>

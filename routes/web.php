@@ -73,9 +73,20 @@ Route::get('/admin', function() {
     return view('admin');
 });
 
+// -------- PRUEBAS --------
+Route::resource('/login', \App\Http\Controllers\LoginController::class)
+    ->only(['index', 'store', 'destroy']);
+
+
+
+
+
+
 
 // -------- PRUEBAS --------
 Route::get('/hora', function () {
     return view('header');
     //return \Carbon\Carbon:: now() -> toDateString();
 });
+
+
