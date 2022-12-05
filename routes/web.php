@@ -73,11 +73,13 @@ Route::get('/admin', function() {
     return view('admin');
 });
 
-// -------- PRUEBAS --------
+// -------- SESIONES --------
 Route::resource('/login', \App\Http\Controllers\LoginController::class)
-    ->only(['index', 'store', 'destroy']);
+    ->only(['index', 'store']);
 
-
+Route::post('/logout', [
+    \App\Http\Controllers\LoginController::class, 'destroy'
+]) -> name('log.out');
 
 
 
@@ -87,6 +89,6 @@ Route::resource('/login', \App\Http\Controllers\LoginController::class)
 Route::get('/hora', function () {
     return view('header');
     //return \Carbon\Carbon:: now() -> toDateString();
-});
+}) -> name('hora.show');
 
 
