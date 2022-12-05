@@ -10,8 +10,9 @@
     <link rel="icon" type="image/x-icon" href="{{ \Illuminate\Support\Facades\URL::asset('images/Logo1.png') }}">
 
 
-    <link href="{{ \Illuminate\Support\Facades\URL::asset('css/generales-inicio.css') }}" rel="stylesheet">
-    <link href="{{ \Illuminate\Support\Facades\URL::asset('css/home.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\URL::asset('css/generales-inicio.css') }}">
+    @stack('home-styles')
+    @stack('services-styles')
 
 </head>
 <body>
@@ -23,8 +24,8 @@
         </a>
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="#" class="nav-link px-2 link-dark">inicio</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">servicios</a></li>
+            <li><a href="{{ route('home.view') }}" class="nav-link px-2 link-dark">inicio</a></li>
+            <li><a href="{{ route('servicios.view') }}" class="nav-link px-2 link-dark">servicios</a></li>
             <li><a href="#" class="nav-link px-2 link-dark">institucional</a></li>
             <li><a href="#" class="nav-link px-2 link-dark">contacto</a></li>
         </ul>
@@ -41,16 +42,14 @@
 </main>
 
 
-<div class="container">
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-        <div class="col-md-4 d-flex align-items-center">
-            <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-                <img class="logo-small" src="{{ \Illuminate\Support\Facades\URL::asset('images/LogoBN.png') }}" alt="UTN Salud logo">
-            </a>
-            <span class="mb-3 mb-md-0 text-muted">&copy; 2022 UTN Salud</span>
-        </div>
-    </footer>
-</div>
+<footer class="container d-flex flex-wrap justify-content-between align-items-center py-2 my-3 border-top">
+    <div class="col-md-4 d-flex align-items-center">
+        <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+            <img class="logo-small" src="{{ \Illuminate\Support\Facades\URL::asset('images/LogoBN.png') }}" alt="UTN Salud logo">
+        </a>
+        <span class="mb-3 mb-md-0 text-muted">&copy; 2022 UTN Salud</span>
+    </div>
+</footer>
 
 </body>
 </html>
