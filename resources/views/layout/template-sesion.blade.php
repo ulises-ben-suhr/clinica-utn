@@ -11,9 +11,7 @@
 
 
     <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\URL::asset('css/generales-inicio.css') }}">
-    @stack('home-styles')
-    @stack('services-styles')
-    @stack('institucional-styles')
+    @stack('login-styles')
 
 </head>
 <body>
@@ -24,21 +22,22 @@
             <img class="logo" src="{{ \Illuminate\Support\Facades\URL::asset('images/Logo1.png') }}" alt="UTN Salud logo">
         </a>
 
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="{{ route('home.view') }}" class="nav-link px-2 link-dark">inicio</a></li>
-            <li><a href="{{ route('servicios.view') }}" class="nav-link px-2 link-dark">servicios</a></li>
-            <li><a href="{{ route('institucional.view') }}" class="nav-link px-2 link-dark">institucional</a></li>
-            <li><a href="#" class="nav-link px-2 link-dark">contacto</a></li>
-        </ul>
+{{--        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">--}}
+{{--            <li><a href="{{ route('home.view') }}" class="nav-link px-2 link-dark">inicio</a></li>--}}
+{{--            <li><a href="{{ route('servicios.view') }}" class="nav-link px-2 link-dark">servicios</a></li>--}}
+{{--            <li><a href="{{ route('institucional.view') }}" class="nav-link px-2 link-dark">institucional</a></li>--}}
+{{--            <li><a href="#" class="nav-link px-2 link-dark">contacto</a></li>--}}
+{{--        </ul>--}}
 
         <div id="registro" class="col-md-3 text-end">
-            <a href="{{ route('login.index') }}" class="btn btn-outline-primary me-2">ingresar</a>
-            <a href="{{ route('register.create') }}" type="button" class="btn btn-primary">registrarse</a>
+{{--            <a href="{{ route('login.index') }}" class="btn btn-outline-primary me-2">ingresar</a>--}}
+{{--            <a href="{{ route('register.create') }}" type="button" class="btn btn-primary">registrarse</a>--}}
+                <a href="{{ route('log.out') }}" class="">Salir</a>
         </div>
     </header>
 </div>
 
-<main>
+<main id="login">
     @yield('contenido')
 </main>
 

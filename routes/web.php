@@ -81,14 +81,18 @@ Route::post('/logout', [
     \App\Http\Controllers\LoginController::class, 'destroy'
 ]) -> name('log.out');
 
+Route::get('/registro', [
+    \App\Http\Controllers\RegisterController::class, 'create'
+]) -> name('register.create');
 
-
+Route::post('/registro', [
+    \App\Http\Controllers\RegisterController::class, 'store'
+]) -> name('register.store');
 
 
 // -------- PRUEBAS --------
 Route::get('/hora', function () {
-    return view('header');
-    //return \Carbon\Carbon:: now() -> toDateString();
+    return \Carbon\Carbon:: now() -> toDateString();
 }) -> name('hora.show');
 
 

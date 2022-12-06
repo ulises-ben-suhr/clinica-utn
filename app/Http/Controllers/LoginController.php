@@ -13,6 +13,8 @@ class LoginController extends Controller
 
     public function store(Request $request) {
         // Acá vienen todas las validaciones pertinentes
+
+
         if (Auth::attempt([
             'username' => $request -> post('usuario'),
             'password' => $request -> post('contrasenia')
@@ -24,7 +26,7 @@ class LoginController extends Controller
         }
 
         else {
-            // Si no coincide, volvemos a la misma vista
+            dd($request); die();
             return back() -> withErrors([
                 'usuario' => 'El nombre de usuario no existe en la base de datos.',
                 'contrasenia' => 'La contraseña no coincide con el nombre de usuario ingresado.'
