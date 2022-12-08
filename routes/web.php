@@ -68,10 +68,27 @@ Route::put('/paciente', [
 ]) -> name('paciente.update');
 
 
+
+
+Route::get('/pacientes/{username}', [
+    \App\Http\Controllers\TurnosController::class, 'indexTurnosPaciente'
+]) -> name('turnos.unPaciente');
+
+
+
+
+
+
+
 // -------- ADMIN --------
 Route::get('/admin', function() {
     return view('admin');
 });
+
+
+
+
+
 
 // -------- SESIONES --------
 Route::resource('/login', \App\Http\Controllers\LoginController::class)

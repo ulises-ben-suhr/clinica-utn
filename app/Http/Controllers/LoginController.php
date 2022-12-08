@@ -22,7 +22,7 @@ class LoginController extends Controller
             // Si coincide creamos la sesión
             $request -> session() -> regenerate();
 
-            return redirect(route('hora.show'));
+            return redirect()->route('turnos.unPaciente', ['username' => $request -> post('usuario')]);
         }
 
         else {

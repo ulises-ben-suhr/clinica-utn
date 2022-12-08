@@ -81,7 +81,4 @@ class PacientesController extends Controller
         catch(\Exception $exception) {
         }
     }
-
-
-
 }

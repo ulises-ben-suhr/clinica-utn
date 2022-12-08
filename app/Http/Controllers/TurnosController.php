@@ -16,11 +16,25 @@ class TurnosController extends Controller
      */
     public function index()
     {
-        $turnos = DB::select('SELECT fecha_turno, estado, paciente, doctor, especialidad, horario FROM turnos');
-
+        $turnos = DB::select(
+            'SELECT fecha_turno, estado, paciente, doctor, especialidad, horario FROM turnos'
+        );
 
         return view('turnos', [
             "turnos" => $turnos
+        ]);
+    }
+
+    public function indexTurnosPaciente($username) {
+        $turnos = DB::select(
+            'SELECT fecha_turno, horario, doctor, especialidad, estado FROM turnos
+            INNER JOIN usuarios ON usuarios.pacienteFK = turnos.paciente_FK
+            WHERE usuarios.username = ? ', [$username]
+        );
+//        dd($turnos);
+
+        return view('/pacientes/homePaciente', [
+            'turnos' => $turnos
         ]);
     }
 
