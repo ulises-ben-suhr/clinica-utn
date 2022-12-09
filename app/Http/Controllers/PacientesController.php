@@ -4,19 +4,32 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class PacientesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index(Request $request)
     {
-        $pacientes = DB::select(
-            'SELECT nombre, apellido, dni FROM pacientes'
-        );
+        $this->validate($request,[
+            'dni' => ['digits_between:0,8']
+        ]);
+
+        $dni = $request->get('dni', NULL);
+
+        if($dni == NULL){
+            $pacientes = DB::select(
+                'SELECT id,nombre, apellido, dni FROM pacientes'
+            );
+        }else{
+            $dni = $dni.'%';
+            $pacientes = DB::select(
+                'SELECT id,nombre, apellido, dni FROM pacientes WHERE dni LIKE :dni', ['dni' => $dni]
+            );
+        }
+
+
         return view('/pacientes/pacientes', [
             'pacientes' => $pacientes
         ]);
@@ -29,7 +42,9 @@ class PacientesController extends Controller
      */
     public function create()
     {
-        return view('pacientes.detallePaciente');
+        return view('pacientes.paciente',[
+            'create' => true
+        ]);
     }
 
     /**
@@ -40,27 +55,28 @@ class PacientesController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            DB::transaction(function() use($request) {
-                DB::insert(
-                    'INSERT INTO pacientes (nombre, apellido, dni, direccion, telefono1, email, categoria_os, numero_afiliado)
-                        values (?, ?, ?, ?, ?, ?, ?, ?)', [
-                        $request -> post('nombre'),
-                        $request -> post('apellido'),
-                        $request -> post('dni'),
-                        $request -> post('direccion'),
-                        $request -> post('telefono'),
-                        $request -> post('email'),
-                        $request -> post('categoria_os'),
-                        $request -> post('numero_afiliado')
-                    ]
-                );
-            });
-            redirect(route('pacientes.index'));
-        }
-        catch (\Exception $exception) {
-            dd($exception);
-        }
+        return 'Guardando';
+        // try {
+        //     DB::transaction(function() use($request) {
+        //         DB::insert(
+        //             'INSERT INTO pacientes (nombre, apellido, dni, direccion, telefono1, email, categoria_os, numero_afiliado)
+        //                 values (?, ?, ?, ?, ?, ?, ?, ?)', [
+        //                 $request -> post('nombre'),
+        //                 $request -> post('apellido'),
+        //                 $request -> post('dni'),
+        //                 $request -> post('direccion'),
+        //                 $request -> post('telefono'),
+        //                 $request -> post('email'),
+        //                 $request -> post('categoria_os'),
+        //                 $request -> post('numero_afiliado')
+        //             ]
+        //         );
+        //     });
+        //     redirect(route('pacientes.index'));
+        // }
+        // catch (\Exception $exception) {
+        //     dd($exception);
+        // }
     }
 
     /**
@@ -69,17 +85,18 @@ class PacientesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($dni)
+    public function show($id)
     {
-        $busqueda = $dni;
 
         $pacienteBuscado = DB::selectOne(
-            'SELECT nombre, apellido, dni, direccion, telefono1, email, categoria_os, numero_afiliado
+            'SELECT *
             FROM pacientes
-            WHERE dni = ?', [$busqueda]
+            WHERE id = ?', [$id]
         );
-        return view('/pacientes/detallePaciente', [
-            'paciente' => $pacienteBuscado
+
+        return view('pacientes.paciente',[
+            'paciente' => $pacienteBuscado,
+            'show' => true
         ]);
     }
 
@@ -91,7 +108,18 @@ class PacientesController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $pacienteBuscado = DB::selectOne(
+            'SELECT *
+            FROM pacientes
+            WHERE id = ?', [$id]
+        );
+
+
+        return view('pacientes.paciente',[
+            'paciente' => $pacienteBuscado,
+            'edit' => true
+        ]);
     }
 
     /**
@@ -103,31 +131,32 @@ class PacientesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
-            DB::transaction(function() use($request) {
-                DB::update(
-                    'UPDATE pacientes
-                    SET nombre = ?, apellido = ?,
-                        dni = ?, direccion = ?,
-                        telefono1 = ?, email = ?,
-                        categoria_os = ?, numero_afiliado = ?
-                    WHERE dni = ?', [
-                        $request -> post('nombre'),
-                        $request -> post('apellido'),
-                        $request -> post('dni'),
-                        $request -> post('direccion'),
-                        $request -> post('telefono'),
-                        $request -> post('email'),
-                        $request -> post('categoria_os'),
-                        $request -> post('numero_afiliado'),
-                        $request -> post('dni'),
-                    ]
-                );
-            });
-            redirect(route('pacientes.index'));
-        }
-        catch(\Exception $exception) {
-        }
+        return 'Actualizando';
+        // try {
+        //     DB::transaction(function() use($request) {
+        //         DB::update(
+        //             'UPDATE pacientes
+        //             SET nombre = ?, apellido = ?,
+        //                 dni = ?, direccion = ?,
+        //                 telefono1 = ?, email = ?,
+        //                 categoria_os = ?, numero_afiliado = ?
+        //             WHERE dni = ?', [
+        //                 $request -> post('nombre'),
+        //                 $request -> post('apellido'),
+        //                 $request -> post('dni'),
+        //                 $request -> post('direccion'),
+        //                 $request -> post('telefono'),
+        //                 $request -> post('email'),
+        //                 $request -> post('categoria_os'),
+        //                 $request -> post('numero_afiliado'),
+        //                 $request -> post('dni'),
+        //             ]
+        //         );
+        //     });
+        //     redirect(route('pacientes.index'));
+        // }
+        // catch(\Exception $exception) {
+        // }
     }
 
     /**
@@ -149,7 +178,8 @@ class PacientesController extends Controller
             FROM pacientes
             WHERE dni = ?', [$busqueda]
         );
-        return view('/pacientes/detallePaciente', [
+
+        return view('pacientes.detallePaciente', [
             'paciente' => $pacienteBuscado
         ]);
     }

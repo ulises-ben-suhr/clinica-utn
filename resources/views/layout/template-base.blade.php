@@ -12,7 +12,8 @@
 
     <link href="{{ \Illuminate\Support\Facades\URL::asset('css/generales-inicio.css') }}" rel="stylesheet">
     <link href="{{ \Illuminate\Support\Facades\URL::asset('css/home.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\URL::asset('css/pacientes.css') }}">
+
+    @yield('styles')
 
 </head>
 <body>

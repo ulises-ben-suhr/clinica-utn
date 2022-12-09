@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-});
+})->name('home.index');
 
 
 
@@ -37,13 +37,13 @@ Route::post('/turnos', [
 
 
 Route::resource('pacientes', \App\Http\Controllers\PacientesController::class)
-    ->only(['index','store','update','show','create']);
+    ->only(['index','store','update','show','create','edit']);
 
 // Este search busca un DNI de paciente en la DB
 // Si encuentra el DNI devuelve un formulario con todos los datos
 // Si no lo encuentra devuelve el formulario vacío para cargarlo con datos nuevos
 
-Route::get('/pacientes/search', [
+Route::get('/pacientes/d/search', [
     \App\Http\Controllers\PacientesController::class, 'search'
 ]) -> name('paciente.search');
 
