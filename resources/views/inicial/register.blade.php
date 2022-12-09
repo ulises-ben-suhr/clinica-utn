@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\URL::asset('css/login.css') }}">
 @endpush
 @section('contenido')
-
+<div id="login">
     <form method="POST" action="{{ route('register.store') }}" class="form-signin w-100 m-auto text-center">
         @csrf
 
@@ -28,6 +28,8 @@
         <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
 
     </form>
+</div>
+
 
 @endsection
 

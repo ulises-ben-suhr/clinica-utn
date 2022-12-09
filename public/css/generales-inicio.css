@@ -3,10 +3,6 @@ body {
     height: calc(100vh - 96.8px - 80px);
 }
 
-body {
-    overflow-x: clip;
-}
-
 .logo {
     height: clamp(32px, 2.5vw, 64px);
 }

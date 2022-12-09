@@ -4,7 +4,7 @@
 @endpush
 
 @section('contenido')
-
+<div id="login">
     <form method="POST" action="{{ route('login.store') }}" class="form-signin w-100 m-auto text-center">
         @csrf
 
@@ -23,5 +23,5 @@
         <button class="w-100 btn btn-lg btn-primary" type="submit">Ingresar!</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
     </form>
-
+</div>
 @endsection
