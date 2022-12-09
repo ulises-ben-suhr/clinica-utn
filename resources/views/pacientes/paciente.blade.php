@@ -154,7 +154,7 @@
                 <input type="text" placeholder="Tú N° de Socio" class="input__form fs-5 ps-2 outline-0 w-100">
             </fieldset>
 
-            <button>EDIT</button>
+            <button class="col-8 col-md-auto btn btn-success rounded-0 px-5 mx-auto me-md-3 me-xl-5 fw-bold fs-5 my-5 ms-auto">Editar</button>
 
         </form>
         </section>
