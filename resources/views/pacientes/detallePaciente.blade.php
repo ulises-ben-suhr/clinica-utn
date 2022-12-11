@@ -10,14 +10,15 @@
 </head>
 <body>
 
+
 <main>
 
 {{--  Este es el formulario al que llega la REQUEST que busca a un paciente con el método SEARCH  --}}
 {{--  Si encuentra el DNI @if(isset($paciente)) -> devuelve el formulario con sus datos y un botón de editar  --}}
 {{--  Si no encuentra el DNI @if(!isset($paciente)) -> devuelve el formulario vacío y un botón para darle el alta  --}}
 
-    @if(isset($paciente)) <form action="{{ route('paciente.update') }}" method="POST"> @method('PUT') @endif
-    @if(!isset($paciente)) <form action="{{ route('paciente.store') }}" method="POST"> @endif
+    @if( isset($paciente)) <form action="{{ route('pacientes.update', $paciente->dni) }}" method="POST"> @method('PUT') @endif
+    @if(!isset($paciente) and Request::route()->getName()  === 'pacientes.create') <form action="{{ route('pacientes.store') }}" method="POST"> @endif
         @csrf
         <fieldset>
             <legend>Datos Personales</legend>
@@ -76,7 +77,6 @@
     @if(!isset($paciente)) </form> @endif
     @if(isset($paciente)) </form> @endif
 </main>
-
 
 
 
