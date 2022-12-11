@@ -1,0 +1,97 @@
+.institucional_hero {
+    background-image: linear-gradient(to bottom, rgba(166,239,253, .39) 0%, rgba(117, 19, 93, 0.52)), url('../images/inst-pic.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: calc(100vh - 96.8px - 80px);
+
+    display: grid;
+}
+
+.hero_titulo {
+    width: 100vw;
+    align-self: center;
+    background: rgba(255, 255, 255, .125);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+
+/*/////////////////////////////////////////////////*/
+
+
+.ideologia {
+    display: grid;
+    column-gap: 2rem;
+    margin: 4rem 2.25rem;
+}
+
+@media(min-width: 45em) {
+    .ideologia {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.ideologia .ideologia_vision {
+    position: relative;
+}
+
+.ideologia .vision_deco {
+    background-color: #EDEAE1;
+    width: 280px; height: 100%;
+    position: absolute;
+    top: 10px; left: 16px;
+    z-index: -1;
+}
+
+.mision_titulo,
+.vision_titulo,
+.valores_titulo{
+    border-bottom: 1px solid ;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+    border-image:
+        radial-gradient(#6C757D 20%, transparent 90%) 10;
+}
+
+
+/*/////////////////////////////////////////////////*/
+
+
+.valores_descripcion {
+    margin: 4rem 2.25rem;
+    column-gap: 2rem;
+    display: grid;
+}
+
+@media(min-width: 35em) {
+    .valores_descripcion {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(min-width: 80em) {
+    .valores_descripcion {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+.descripcion_card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card_imagen {
+    width: 128px;
+    height: 128px;
+}
+
+.card_titulo {
+
+}
+
+.card_texto {
+
+}
