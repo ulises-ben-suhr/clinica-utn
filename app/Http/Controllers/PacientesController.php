@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\entities\Paciente;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use mysql_xdevapi\Table;
 
 class PacientesController extends Controller
 {
@@ -30,6 +31,85 @@ class PacientesController extends Controller
         ]);
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////
+
+
+    private function createRandomPass() {
+        return "shadow";
+    }
+
+    private function getLastPacienteID() {
+        return DB::selectOne(
+            'SELECT id FROM pacientes WHERE id = (SELECT MAX(id) FROM pacientes)'
+        );
+    }
+
+    private function getLastUsuarioID() {
+        return DB::selectOne(
+            'SELECT id FROM usuarios WHERE id = (SELECT MAX(id) FROM usuarios)'
+        );
+    }
+
+    private function conectarUserPaciente($idPaciente, $idUsuario) {
+        try {
+            DB::transaction(function() use($idPaciente, $idUsuario) {
+                DB::update(
+                    'UPDATE usuarios SET usuarios.pacienteFK = ?
+             WHERE id = ?', [$idPaciente, $idUsuario]
+                );
+            });
+        }
+
+        catch (\Exception $exception) {
+
+        }
+
+    }
+
+    public function recepcionDePaciente(Request $request) {
+        try {
+            $this -> store($request);
+
+            $nombreUsuario = $request -> post('dni');
+            $contrasenia = $this -> createRandomPass();
+            $ultimoPacienteRecepcionado = $this -> getLastPacienteID() -> id;
+
+            (new RegisterController()) -> storeAutoUser(
+                $nombreUsuario,
+                $contrasenia,
+                $ultimoPacienteRecepcionado
+            );
+
+            return redirect('');
+        }
+        catch (\Exception $exception) {
+            dd($nombreUsuario, $contrasenia, $ultimoPacienteRecepcionado);
+        }
+    }
+
+    public function registroDePaciente(Request $request) {
+        $this -> store($request);
+        $ultimoIdPaciente = $this -> getLastPacienteID();
+        $ultimoIdUsuario = $this -> getLastUsuarioID();
+        $this -> conectarUserPaciente($ultimoIdPaciente -> id, $ultimoIdUsuario -> id);
+
+        return redirect('');
+    }
+
     public function store(Request $request) {
         try {
             DB::transaction(function() use($request) {
@@ -47,12 +127,18 @@ class PacientesController extends Controller
                     ]
                 );
             });
-            redirect(route('paciente.index'));
         }
         catch (\Exception $exception) {
             dd($exception);
         }
     }
+
+
+
+
+
+
+    //////////////////////////////////////////////////////////////////
 
     public function update(Request $request) {
         try {

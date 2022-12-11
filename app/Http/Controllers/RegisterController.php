@@ -32,4 +32,23 @@ class RegisterController extends Controller
             dd($exception);
         }
     }
+
+    public function storeAutoUser($usuario, $contrasenia, $idPacienteFK) {
+        try {
+            DB::transaction(function() use($usuario, $contrasenia, $idPacienteFK) {
+                DB::insert(
+                    'INSERT INTO usuarios (username, password, pacienteFK) VALUES (?, ?, ?)', [
+                        $usuario,
+                        Hash::make($contrasenia),
+                        $idPacienteFK
+                    ]
+                );
+            });
+
+            return redirect('');
+        }
+        catch (\Exception $exception) {
+            dd($exception);
+        }
+    }
 }

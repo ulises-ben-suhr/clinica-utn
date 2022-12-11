@@ -17,7 +17,7 @@
 {{--  Si no encuentra el DNI @if(!isset($paciente)) -> devuelve el formulario vacío y un botón para darle el alta  --}}
 
     @if(isset($paciente)) <form action="{{ route('paciente.update') }}" method="POST"> @method('PUT') @endif
-    @if(!isset($paciente)) <form action="{{ route('paciente.store') }}" method="POST"> @endif
+    @if(!isset($paciente)) <form action="{{ route('pacientesRecepcionados.store') }}" method="POST"> @endif
         @csrf
         <fieldset>
             <legend>Datos Personales</legend>

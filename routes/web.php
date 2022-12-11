@@ -58,9 +58,21 @@ Route::get('/pacientes/search', [
     \App\Http\Controllers\PacientesController::class, 'search'
 ]) -> name('paciente.search');
 
-Route::post('/pacientes', [
-    \App\Http\Controllers\PacientesController::class, 'store'
-]) -> name('paciente.store');
+
+
+//Route::post('/pacientes', [
+//    \App\Http\Controllers\PacientesController::class, 'store'
+//]) -> name('paciente.store');
+
+Route::post('/pacientesRecepcionados', [
+  \App\Http\Controllers\PacientesController:: class, 'recepcionDePaciente'
+]) -> name('pacientesRecepcionados.store');
+
+Route::post('/pacientesRegistrados', [
+  \App\Http\Controllers\PacientesController::class, 'registroDePaciente'
+]) -> name('pacientesRegistrados.store');
+
+
 
 // Esto no está funcionando -> Es el botón para editar los datos de un paciente
 Route::put('/paciente', [
