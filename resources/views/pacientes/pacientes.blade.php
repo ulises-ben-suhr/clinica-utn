@@ -16,7 +16,7 @@
         'links' => [
             (object) array(
                 'titulo' => 'Inicio',
-                'ruta' => 'home.index'
+                'ruta' => 'home.view'
             ),
             (object) array(
                 'titulo' => 'Pacientes',
