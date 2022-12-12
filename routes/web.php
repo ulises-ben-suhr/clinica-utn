@@ -52,6 +52,14 @@ Route::post('/turnos', [
 Route::resource('pacientes', \App\Http\Controllers\PacientesController::class)
     ->only(['index','store','update','show','create','edit']);
 
+
+Route::post('/pacientesRecepcionados', [\App\Http\Controllers\PacientesController:: class, 'recepcionDePaciente'])
+    -> name('pacientesRecepcionados.store');
+
+Route::post('/pacientesRegistrados', [\App\Http\Controllers\PacientesController::class, 'registroDePaciente'])
+    -> name('pacientesRegistrados.store');
+
+
 // Este search busca un DNI de paciente en la DB
 // Si encuentra el DNI devuelve un formulario con todos los datos
 // Si no lo encuentra devuelve el formulario vacío para cargarlo con datos nuevos
@@ -65,6 +73,22 @@ Route::get('/admin', function() {
     return view('admin');
 });
 
+
+// -------- SESIONES --------
+Route::resource('/login', \App\Http\Controllers\LoginController::class)
+    ->only(['index', 'store']);
+
+Route::post('/logout', [
+    \App\Http\Controllers\LoginController::class, 'destroy'
+]) -> name('log.out');
+
+Route::get('/registro', [
+    \App\Http\Controllers\RegisterController::class, 'create'
+]) -> name('register.create');
+
+Route::post('/registro', [
+    \App\Http\Controllers\RegisterController::class, 'store'
+]) -> name('register.store');
 
 // -------- PRUEBAS --------
 Route::get('/hora', function () {

@@ -1,5 +1,6 @@
+html,
 body {
-    overflow-x: clip;
+    height: calc(100vh - 96.8px - 80px);
 }
 
 .logo {
@@ -16,4 +17,13 @@ body {
 
 #registro > * {
     text-transform: capitalize;
+}
+
+main#login {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #f5f5f5;
 }

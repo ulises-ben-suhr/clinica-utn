@@ -43,7 +43,8 @@ class PacientesController extends Controller
     public function create()
     {
         return view('pacientes.paciente',[
-            'create' => true
+            'create' => true,
+            'seccion' => 'Crear paciente'
         ]);
     }
 
@@ -94,9 +95,11 @@ class PacientesController extends Controller
             WHERE id = ?', [$id]
         );
 
+
         return view('pacientes.paciente',[
             'paciente' => $pacienteBuscado,
-            'show' => true
+            'show' => true,
+            'seccion' => 'Informacion Paciente'
         ]);
     }
 
@@ -118,7 +121,8 @@ class PacientesController extends Controller
 
         return view('pacientes.paciente',[
             'paciente' => $pacienteBuscado,
-            'edit' => true
+            'edit' => true,
+            'seccion' => 'Modificar paciente'
         ]);
 }
     /**
@@ -182,4 +186,69 @@ class PacientesController extends Controller
             'paciente' => $pacienteBuscado
         ]);
     }
+
+        //////////////////////////////////////////////////////////////////
+
+
+        private function createRandomPass() {
+            return "shadow";
+        }
+
+        private function getLastPacienteID() {
+            return DB::selectOne(
+                'SELECT id FROM pacientes WHERE id = (SELECT MAX(id) FROM pacientes)'
+            );
+        }
+
+        private function getLastUsuarioID() {
+            return DB::selectOne(
+                'SELECT id FROM usuarios WHERE id = (SELECT MAX(id) FROM usuarios)'
+            );
+        }
+
+        private function conectarUserPaciente($idPaciente, $idUsuario) {
+            try {
+                DB::transaction(function() use($idPaciente, $idUsuario) {
+                    DB::update(
+                        'UPDATE usuarios SET usuarios.pacienteFK = ?
+                 WHERE id = ?', [$idPaciente, $idUsuario]
+                    );
+                });
+            }
+
+            catch (\Exception $exception) {
+
+            }
+
+        }
+
+        public function recepcionDePaciente(Request $request) {
+            try {
+                $this -> store($request);
+
+                $nombreUsuario = $request -> post('dni');
+                $contrasenia = $this -> createRandomPass();
+                $ultimoPacienteRecepcionado = $this -> getLastPacienteID() -> id;
+
+                (new RegisterController()) -> storeAutoUser(
+                    $nombreUsuario,
+                    $contrasenia,
+                    $ultimoPacienteRecepcionado
+                );
+
+                return redirect('');
+            }
+            catch (\Exception $exception) {
+                dd($nombreUsuario, $contrasenia, $ultimoPacienteRecepcionado);
+            }
+        }
+
+        public function registroDePaciente(Request $request) {
+            $this -> store($request);
+            $ultimoIdPaciente = $this -> getLastPacienteID();
+            $ultimoIdUsuario = $this -> getLastUsuarioID();
+            $this -> conectarUserPaciente($ultimoIdPaciente -> id, $ultimoIdUsuario -> id);
+
+            return redirect('');
+        }
 }

@@ -16,7 +16,7 @@
         'links' => [
             (object) array(
                 'titulo' => 'Inicio',
-                'ruta' => 'home.view'
+                'ruta' => 'home.index'
             ),
             (object) array(
                 'titulo' => 'Pacientes',
@@ -40,7 +40,7 @@
                 <form class="position-relative col-11 col-md-6 col-xxl-5 p-2 mx-3 d-flex align-items-center justify-content-center" action="{{ route('pacientes.index') }}" method="GET">
                     <input class="w-100 p-2 outline-0 border border-secondary border-right-0
                     @error('dni')
-                    border-danger
+                        border-danger
                     @enderror
 
                     "
@@ -59,7 +59,7 @@
             <section class="row justify-content-between my-5 my-lg-4 align-items-center ">
                 <a href="{{ route('pacientes.create') }}" class=" col-11 col-md-auto rounded-0 text-center d-flex align-items-center justify-content-center btn btn-success mx-3 sansbold">Añadir un nuevo paciente</a>
                 <nav aria-label="..." class="col-11 col-md-6 col-xxl-5 p-2 mx-3 d-flex align-items-center" >
-                    1.2.3.4.5.6.7.8.9.10
+
                 </nav>
             </section>
 

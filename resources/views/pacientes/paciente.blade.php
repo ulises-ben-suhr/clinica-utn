@@ -16,6 +16,29 @@
         <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\URL::asset('css/pacientes.css') }}">
     @endsection
 
+    @if (isset($show))
+        @section('title-form')
+            FORMULARIO DE INFORMACIÓN DE USUARIO
+        @endsection
+        @section('botones')
+            <button class="col-8 col-md-auto btn btn-success rounded-0 px-5 mx-auto me-md-3 me-xl-5 fw-bold fs-5 mt-5 mb-4 ms-auto">Editar</button>
+        @endsection
+    @elseif (isset($edit))
+        @section('title-form')
+            FORMULARIO DE MODIFICACIÓN DE DATOS
+        @endsection
+        @section('botones')
+            <button class="col-8 offset-md-7 col-md-2 btn btn-danger px-5 fw-bold fs-5 mt-5 mb-4 ">Cancelar</button>
+            <button class="col-8 offset-md-1 col-md-2 btn btn-success px-5 fw-bold fs-5 mt-5 mb-4 ">Guardar</button>
+        @endsection
+    @elseif (isset($create))
+        @section('title-form')
+            FORMULARIO DE CREACIÓN DE PACIENTE
+        @endsection
+    @endif
+
+
+
     @section('contenido')
         @include('layout.template-title-section', [
             'titulo' => 'datos personales',
@@ -29,7 +52,7 @@
                     'ruta' => 'pacientes.index'
                 ),
                 (object) array(
-                    'titulo' => 'Información paciente',
+                    'titulo' => $seccion,
                     'ruta' => '#'
                 ),
             ]
@@ -48,36 +71,79 @@
                 @csrf
             @endif
 
+            <div class="fs-5 px-xl-5 py-2 shadow-form-title border-bottom border-primary border-3">
+                @yield('title-form')
+            </div>
+
             <fieldset class="col-md-6 mt-4 px-xl-5">
-                <label for="" class="fs-5 mb-1">APELLIDO</label>
+                <label for="nombre" class="fs-5 mb-1">NOMBRE COMPLETO</label>
                 <div class="input__form d-flex">
                     <div class="input-icon d-flex justify-content-center align-items-center">
                         <img src="{{ \Illuminate\Support\Facades\URL::asset('/images/form_paciente/form_user.svg') }}"
                         alt="icono de correo electronico" class="">
                     </div>
-                    <input type="text" placeholder="Ingrese su apellido" class="outline-0 border-0 ht-48 w-100 fs-5 ps-2">
+                    <input type="text" name="nombre" id="nombre" placeholder="Ingrese su nombre completo"
+                        class="outline-0 border-0 ht-48 w-100 fs-5 ps-2"
+                            @if (isset($show) || isset($edit))
+                                value="{{$paciente->nombre}}"
+                            @else
+                                value="{{ old('nombre')}}"
+                            @endif
+                            @if(isset($show))
+                                disabled
+                            @endif
+                        >
                 </div>
             </fieldset>
 
             <fieldset class="col-md-6 mt-4 px-xl-5">
-                <label for="" class="fs-5 d-block mb-1">NOMBRE COMPLETO</label>
-                <input type="text" placeholder="Ingrese su nombre completo" class="input__form fs-5 ps-2 outline-0 w-100">
+                <label for="apellido" class="fs-5 d-block mb-1">APELLIDO</label>
+                <input type="text" name="apellido" id="apellido"
+                    placeholder="Ingrese su apellido"
+                    class="input__form fs-5 ps-2 outline-0 w-100"
+                    @if (isset($show) || isset($edit))
+                        value="{{$paciente->apellido}}"
+                    @else
+                        value="{{ old('apellido')}}"
+                    @endif
+                    @if(isset($show))
+                        disabled
+                    @endif
+                >
             </fieldset>
 
             <fieldset class="col-md-6 mt-4 px-xl-5">
-                <label for="" class="fs-5 mb-1">EMAIL</label>
+                <label for="email" class="fs-5 mb-1">EMAIL</label>
                 <div class="input__form d-flex">
                     <div class="input-icon d-flex justify-content-center align-items-center">
                         <img src="{{ \Illuminate\Support\Facades\URL::asset('/images/form_paciente/form_email.svg') }}"
                         alt="icono de correo electronico" class="">
                     </div>
-                    <input type="text" placeholder="Por ejemplo, tucorreo@gmail.com" class="outline-0 border-0 ht-48 w-100 fs-5 ps-2">
+                    <input type="email" name="email" id="email" placeholder="Por ejemplo, tucorreo@gmail.com" class="outline-0 border-0 ht-48 w-100 fs-5 ps-2"
+                        @if (isset($show) || isset($edit))
+                            value="{{$paciente->email}}"
+                        @else
+                            value="{{ old('email')}}"
+                        @endif
+                        @if(isset($show))
+                            disabled
+                        @endif
+                    >
                 </div>
             </fieldset>
 
             <fieldset class="col-md-6 mt-4 px-xl-5">
-                <label for="" class="fs-5 d-block mb-1">GENERO</label>
-                <select type="text" placeholder="Ingrese su nombre" class="input__form fs-5 ps-2 w-100 outline-0 input__form">
+                <label for="genero" class="fs-5 d-block mb-1">GENERO</label>
+                <select type="text" name="genero" id="genero" placeholder="Ingrese su nombre" class="input__form fs-5 ps-2 w-100 outline-0 input__form"
+                @if (isset($show) || isset($edit))
+                    {{-- value="{{$paciente->telefono1}}" --}}
+                @else
+                    value="{{ old('genero')}}"
+                @endif
+                @if(isset($show))
+                    disabled
+                @endif
+                >
                     <option value="">Eliga una opción...</option>
                     <option value="1">Masculino</option>
                     <option value="2">Femenino</option>
@@ -86,75 +152,159 @@
             </fieldset>
 
             <fieldset class="col-md-3 mt-4 px-xl-5">
-                <label for="" class="fs-5 mb-1">DNI</label>
+                <label for="dni" class="fs-5 mb-1">DNI</label>
                 <div class="input__form d-flex">
                     <div class="input-icon d-flex justify-content-center align-items-center">
                         <img src="{{ \Illuminate\Support\Facades\URL::asset('/images/form_paciente/form_dni.svg') }}"
                         alt="icono de correo electronico" class="">
                     </div>
-                    <input type="text" placeholder="Tú DNI" class="outline-0 border-0 ht-48 w-100 fs-5 ps-2">
+                    <input name="dni" id="dni" type="text" placeholder="Tú DNI" class="outline-0 border-0 ht-48 w-100 fs-5 ps-2"
+                        @if (isset($show) || isset($edit))
+                            value="{{$paciente->dni}}"
+                        @else
+                            value="{{ old('dni')}}"
+                        @endif
+                        @if(isset($show))
+                            disabled
+                        @endif
+                    >
                 </div>
             </fieldset>
 
             <fieldset class="col-md-3 mt-4 px-xl-5">
-                <label for="" class="fs-5 d-block mb-1">NACIMIENTO</label>
-                <input type="date" placeholder="Ingrese su nombre" class="input__form fs-5 ps-2 outline-0 w-100">
+                <label for="nacimiento" class="fs-5 d-block mb-1">NACIMIENTO</label>
+                <input type="date" name="nacimiento" id="nacimiento" placeholder="Ingrese su nombre" class="input__form fs-5 ps-2 outline-0 w-100"
+                @if (isset($show) || isset($edit))
+                    {{-- value="{{$paciente->telefono1}}" --}}
+                @else
+                    value="{{ old('nacimiento')}}"
+                @endif
+                @if(isset($show))
+                    disabled
+                @endif
+                >
             </fieldset>
 
             <fieldset class="col-md-6 mt-4 px-xl-5">
-                <label for="" class="fs-5 mb-1">NÚMERO DE CELULAR</label>
+                <label for="telefono" class="fs-5 mb-1">NÚMERO DE CELULAR</label>
                 <div class="input__form d-flex">
                     <div class="input-icon d-flex justify-content-center align-items-center">
                         <img src="{{ \Illuminate\Support\Facades\URL::asset('/images/form_paciente/form_phone.svg') }}"
                         alt="icono de correo electronico" class="">
                     </div>
-                    <input type="text" placeholder="11 XXXX-XXXX" class="outline-0 border-0 ht-48 w-100 fs-5 ps-2">
+                    <input type="text" name="telefono" id="telefono" placeholder="11 XXXX-XXXX" class="outline-0 border-0 ht-48 w-100 fs-5 ps-2"
+                        @if (isset($show) || isset($edit))
+                            value="{{$paciente->telefono1}}"
+                        @else
+                            value="{{ old('telefono')}}"
+                        @endif
+                        @if(isset($show))
+                            disabled
+                        @endif
+                >
                 </div>
             </fieldset>
 
             <fieldset class="col-md-6 mt-4 px-xl-5">
-                <label for="" class="fs-5 mb-1">NOMBRE DE CALLE</label>
+                <label for="direccion" class="fs-5 mb-1">NOMBRE DE CALLE</label>
                 <div class="input__form d-flex">
                     <div class="input-icon d-flex justify-content-center align-items-center">
                         <img src="{{ \Illuminate\Support\Facades\URL::asset('/images/form_paciente/form_map.svg') }}"
                         alt="icono de correo electronico" class="">
                     </div>
-                    <input type="text" placeholder="Por ejemplo, 25 de mayo" class="outline-0 border-0 ht-48 w-100 fs-5 ps-2">
+                    <input type="text" name="direccion" id="direccion" placeholder="Por ejemplo, 25 de mayo" class="outline-0 border-0 ht-48 w-100 fs-5 ps-2"
+                        @if (isset($show) || isset($edit))
+                            value="{{$paciente->direccion}}"
+                        @else
+                            value="{{ old('direccion')}}"
+                        @endif
+                        @if(isset($show))
+                            disabled
+                        @endif
+                    >
                 </div>
             </fieldset>
 
             <fieldset class="col-md-3 mt-4 px-xl-5">
-                <label for="" class="fs-5 d-block mb-1">NÚMERO</label>
-                <input type="text" placeholder="N° Domicilio" class="input__form fs-5 ps-2 outline-0 w-100">
+                <label for="numero_calle" class="fs-5 d-block mb-1">NÚMERO</label>
+                <input type="text" name="numero_calle" id="numero_calle" placeholder="N° Domicilio" class="input__form fs-5 ps-2 outline-0 w-100"
+                @if (isset($show) || isset($edit))
+                    {{-- value="{{$paciente->direccion}}" --}}
+                @else
+                    value="{{ old('numero_calle')}}"
+                @endif
+                @if(isset($show))
+                    disabled
+                @endif
+                >
             </fieldset>
 
             <fieldset class="col-md-3 mt-4 px-xl-5">
-                <label for="" class="fs-5 d-block mb-1">LOCALIDAD</label>
-                <input type="text" placeholder="Lanús, Lomas..." class="input__form fs-5 ps-2 outline-0 w-100">
+                <label for="localidad" class="fs-5 d-block mb-1">LOCALIDAD</label>
+                <input type="text" name="localidad" id="localidad" placeholder="Lanús, Lomas..." class="input__form fs-5 ps-2 outline-0 w-100"
+                @if (isset($show) || isset($edit))
+                    {{-- value="{{$paciente->direccion}}" --}}
+                @else
+                    value="{{ old('localidad')}}"
+                @endif
+                @if(isset($show))
+                    disabled
+                @endif
+                >
             </fieldset>
 
             <fieldset class="col-md-6 mt-4 px-xl-5">
-                <label for="" class="fs-5 mb-1">OBRA SOCIAL</label>
+                <label for="obrasocial" class="fs-5 mb-1">OBRA SOCIAL</label>
                 <div class="input__form d-flex">
                     <div class="input-icon d-flex justify-content-center align-items-center">
                         <img src="{{ \Illuminate\Support\Facades\URL::asset('/images/form_paciente/form_obrasocial.svg') }}"
                         alt="icono de correo electronico" class="">
                     </div>
-                    <input type="text" placeholder="Obra social a la cual pertenece" class="outline-0 border-0 ht-48 w-100 fs-5 ps-2">
+                    <input type="text" name="obrasocial" id="obrasocial" placeholder="Obra social a la cual pertenece" class="outline-0 border-0 ht-48 w-100 fs-5 ps-2"
+                    @if (isset($show) || isset($edit))
+                        {{-- value="{{$paciente->direccion}}" --}}
+                    @else
+                        value="{{ old('obrasocial')}}"
+                    @endif
+                    @if(isset($show))
+                        disabled
+                    @endif
+                    >
                 </div>
             </fieldset>
 
             <fieldset class="col-md-3 mt-4 px-xl-5">
-                <label for="" class="fs-5 d-block mb-1">PLAN</label>
-                <input type="text" placeholder="Tú plan" class="input__form fs-5 ps-2 outline-0 w-100">
+                <label for="categoria_os" class="fs-5 d-block mb-1">PLAN</label>
+                <input type="text" name="categoria_os" id="categoria_os" placeholder="Tú plan" class="input__form fs-5 ps-2 outline-0 w-100"
+
+                    @if (isset($show) || isset($edit))
+                        value="{{$paciente->categoria_os}}"
+                    @else
+                        value="{{ old('categoria_os')}}"
+                    @endif
+                    @if(isset($show))
+                        disabled
+                    @endif
+            >
             </fieldset>
 
             <fieldset class="col-md-3 mt-4 px-xl-5">
-                <label for="" class="fs-5 d-block mb-1">N° DE SOCIO</label>
-                <input type="text" placeholder="Tú N° de Socio" class="input__form fs-5 ps-2 outline-0 w-100">
+                <label for="numero_afiliado" class="fs-5 d-block mb-1">N° DE SOCIO</label>
+                <input type="text" name="numero_afiliado" id="numero_afiliado" placeholder="Tú N° de Socio" class="input__form fs-5 ps-2 outline-0 w-100"
+                    @if (isset($show) || isset($edit))
+                        value="{{$paciente->numero_afiliado}}"
+                    @else
+                        value="{{ old('numero_afiliado')}}"
+                    @endif
+                    @if(isset($show))
+                        disabled
+                    @endif
+                >
             </fieldset>
 
-            <button class="col-8 col-md-auto btn btn-success rounded-0 px-5 mx-auto me-md-3 me-xl-5 fw-bold fs-5 my-5 ms-auto">Editar</button>
+
+            @yield('botones')
+
 
         </form>
         </section>
