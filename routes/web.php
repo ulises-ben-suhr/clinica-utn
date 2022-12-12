@@ -13,11 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
 
-    return view('home');
-})->name('home.index');
-=======
+Route::get('/', function () {
     return view('inicial/home');
 }) -> name('home.view');
 
@@ -32,7 +29,6 @@ Route::get('/institucional', function () {
 Route::get('/contacto', function () {
     return view('inicial/contacto');
 }) -> name('contacto.view');
-
 
 
 

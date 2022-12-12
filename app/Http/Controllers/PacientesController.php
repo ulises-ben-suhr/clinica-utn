@@ -120,30 +120,7 @@ class PacientesController extends Controller
             'paciente' => $pacienteBuscado,
             'edit' => true
         ]);
-    public function store(Request $request) {
-        try {
-            DB::transaction(function() use($request) {
-                DB::insert(
-                    'INSERT INTO pacientes (nombre, apellido, dni, direccion, telefono1, email, categoria_os, numero_afiliado)
-                        values (?, ?, ?, ?, ?, ?, ?, ?)', [
-                        $request -> post('nombre'),
-                        $request -> post('apellido'),
-                        $request -> post('dni'),
-                        $request -> post('direccion'),
-                        $request -> post('telefono'),
-                        $request -> post('email'),
-                        $request -> post('categoria_os'),
-                        $request -> post('numero_afiliado')
-                    ]
-                );
-            });
-            redirect(route('paciente.index'));
-        }
-        catch (\Exception $exception) {
-            dd($exception);
-        }
-    }
-
+}
     /**
      * Update the specified resource in storage.
      *
