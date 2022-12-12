@@ -14,6 +14,8 @@ class PacientesController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('v-alcance-pacientes');
+        $this->middleware('can:puede_borrar_pacientes')->only(['pacientes']);
     }
 
     public function index(Request $request)

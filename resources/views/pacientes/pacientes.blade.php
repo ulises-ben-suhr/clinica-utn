@@ -119,10 +119,12 @@
                                         Modificar
                                 </a>
 
-                                <button class="btn btn-danger sansbold py-0 pe-2 rounded-1 d-flex align-items-center">
-                                    <img src="./images/trash.svg" alt="" srcset="" class="me-2">
-                                        Remover
-                                </button>
+                                @can('puede_borrar_pacientes')
+                                    <button class="btn btn-danger sansbold py-0 pe-2 rounded-1 d-flex align-items-center">
+                                        <img src="./images/trash.svg" alt="" srcset="" class="me-2">
+                                            Remover
+                                    </button>
+                                @endcan
                             </div>
 
                             <div class="d-flex gap-4 d-lg-none ">

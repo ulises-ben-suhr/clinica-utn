@@ -25,7 +25,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        Gate::define('puede_crear_usuarios', function(){
+        Gate::define('puede_borrar_pacientes', function($usuario){
+            return $usuario->rol == 'ADMINISTRADOR';
+        });
+        Gate::define('puede_programar_turnos', function(){
             return true;
         });
     }

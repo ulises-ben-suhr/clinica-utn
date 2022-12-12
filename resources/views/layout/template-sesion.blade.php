@@ -33,10 +33,10 @@
         <div id="registro" class="col-md-3 text-end">
 {{--            <a href="{{ route('login.index') }}" class="btn btn-outline-primary me-2">ingresar</a>--}}
 {{--            <a href="{{ route('register.create') }}" type="button" class="btn btn-primary">registrarse</a>--}}
-                <form action="{{route('log.out')}}" method="POST">
+                {{-- <form action="{{route('log.out')}}" method="POST">
                     @csrf
                     <button class="">Salir</button>
-                </form>
+                </form> --}}
 
         </div>
     </header>
