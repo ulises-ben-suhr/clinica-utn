@@ -33,10 +33,21 @@
             <li><a href="#" class="nav-link px-2 link-dark">contacto</a></li>
         </ul>
 
-        <div id="registro" class="col-md-3 text-end">
-            <button type="button" class="btn btn-outline-primary me-2">ingresar</button>
-            <button type="button" class="btn btn-primary">registrarse</button>
-        </div>
+        @if(Auth::user() == NULL )
+            <div id="registro" class="col-md-3 text-end">
+                <a href="{{ route('login.index') }}" class="btn btn-outline-primary me-2">ingresar</a>
+                <a  href="{{ route('register.create') }}" class="btn btn-primary">registrarse</a>
+            </div>
+        @else
+            <div id="registro" class="col-md-3 text-end">
+                <a href="#" class="btn btn-outline-primary me-2">Mi cuenta</a>
+                <form action="{{route('log.out')}}" class="d-inline-block" method="POST">
+                    @csrf
+                    <button class="btn">Salir</button>
+                </form>
+            </div>
+        @endif
+
     </header>
 </div>
 
