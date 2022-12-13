@@ -53,9 +53,11 @@
                                 <li><a class="dropdown-item " href="#">Programar un turno</a></li>
                             @endif
 
-                            @if (Auth::user()->rol == 'SECRETARIA' || Auth::user()->rol == 'ADMINISTRADOR')
-                            <li><a class="dropdown-item " href="{{route('pacientes.index')}}">Ver pacientes</a></li>
-                            <li><a class="dropdown-item " href="#">Administrar usuarios</a></li>
+                            @if (Auth::user()->rol != 'PACIENTE')
+                                <li><a class="dropdown-item " href="{{route('pacientes.index')}}">Ver pacientes</a></li>
+                                @if(Auth::user()->rol == 'ADMINISTRADOR')
+                                    <li><a class="dropdown-item " href="#">Administrar usuarios</a></li>
+                                @endif
                             @endif
 
                         </ul>

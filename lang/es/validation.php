@@ -89,7 +89,7 @@ return [
         'array' => 'El campo :attribute no puede tener más de :max elementos.',
         'file' => 'El archivo :attribute no debe pesar más de :max kilobytes.',
         'numeric' => 'El campo :attribute no puede ser mayor que :max.',
-        'string' => 'El campo :attribute no debe tener más de :max caracteres.',
+        'string' => 'El campo no debe tener más de :max caracteres.',
     ],
     'max_digits' => 'El campo :attribute no puede tener más de :max dígitos.',
     'mimes' => 'El archivo :attribute debe ser de tipo: :values.',
@@ -118,7 +118,7 @@ return [
     'prohibited_unless' => 'El campo :attribute está prohibido a menos que :other se encuentre en :values.',
     'prohibits' => 'El campo :attribute prohíbe que :other esté presente.',
     'regex' => 'El formato del campo :attribute es inválido.',
-    'required' => 'El campo :attribute es requerido.',
+    'required' => 'Este campo es obligatorio.',
     'required_array_keys' => 'El campo :attribute debe contener entradas para :values.',
     'required_if' => 'El campo :attribute es requerido cuando :other es :value.',
     'required_if_accepted' => 'El campo :attribute es requerido cuando :other es aceptado.',
@@ -165,11 +165,11 @@ return [
     | Atributos de validación personalizados
     |--------------------------------------------------------------------------
     |
-    | Las siguientes líneas son utilizadas para intercambiar nuestros 
+    | Las siguientes líneas son utilizadas para intercambiar nuestros
     | elementos predefinidos de los atributos por algo más fácil y amigable de leer como
     | "Dirección de correo electrónico" en lugar de "Correo electrónico".
     | Esto simplemente ayuda a que nuestro mensaje sea más expresivo.
-    | 
+    |
     */
 
     'attributes' => [],

@@ -19,6 +19,8 @@ class PacientesController extends Controller
         $this->middleware('can:puede_borrar_pacientes')->only(['pacientes']);
     }
 
+    //METODOS PRINCIPALES
+
     public function index(Request $request)
     {
         $this->validate($request,[
@@ -44,27 +46,21 @@ class PacientesController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
+
+        $obrasSociales = $this->getObrasSociales();
+
         return view('pacientes.paciente',[
             'create' => true,
-            'seccion' => 'Crear paciente'
+            'seccion' => 'Crear paciente',
+            'obrasSociales' => $obrasSociales
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
+        $this->formPacienteValidation($request);
         return 'Guardando';
         // try {
         //     DB::transaction(function() use($request) {
@@ -89,77 +85,64 @@ class PacientesController extends Controller
         // }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
 
-        $pacienteBuscado = DB::selectOne(
-            'SELECT *
-            FROM pacientes
-            WHERE id = ?', [$id]
-        );
+        $pacienteBuscado = $this->getPacienteOfID($id);
 
+        $obrasSociales = $this->getObrasSociales();
 
         return view('pacientes.paciente',[
             'paciente' => $pacienteBuscado,
             'show' => true,
-            'seccion' => 'Informacion Paciente'
+            'seccion' => 'Informacion Paciente',
+            'obrasSociales' => $obrasSociales
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
 
-        $pacienteBuscado = DB::selectOne(
-            'SELECT *
-            FROM pacientes
-            WHERE id = ?', [$id]
-        );
+        $pacienteBuscado = $this->getPacienteOfID($id);
 
+        $obrasSociales = $this->getObrasSociales();
 
         return view('pacientes.paciente',[
             'paciente' => $pacienteBuscado,
             'edit' => true,
-            'seccion' => 'Modificar paciente'
+            'seccion' => 'Modificar paciente',
+            'obrasSociales' => $obrasSociales
         ]);
 }
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
+
+        $this->formPacienteValidation($request);
+
         try {
             DB::transaction(function() use($request,$id) {
                 DB::update(
                     'UPDATE pacientes
                     SET nombre = ?, apellido = ?,
-                        dni = ?, direccion = ?,
+                        dni = ?,
                         telefono1 = ?, email = ?,
-                        categoria_os = ?, numero_afiliado = ?
+                        categoria_os = ?, numero_afiliado = ?, calle = ?,
+                        n_calle = ?, localidad = ?, f_nacimiento = ?, genero = ?, obra_social_FK = ?
                     WHERE id = ?', [
                         $request -> post('nombre'),
                         $request -> post('apellido'),
                         $request -> post('dni'),
-                        $request -> post('direccion'),
                         $request -> post('telefono'),
                         $request -> post('email'),
                         $request -> post('categoria_os'),
                         $request -> post('numero_afiliado'),
+                        $request -> post('calle'),
+                        $request -> post('n_calle'),
+                        $request -> post('localidad'),
+                        $request -> post('f_nacimiento'),
+                        $request -> post('genero'),
+                        $request -> post('obrasocial'),
                         $id,
                     ]
                 );
@@ -167,19 +150,56 @@ class PacientesController extends Controller
             // redirect(route('pacientes.show', $id));
         }
         catch(\Exception $exception) {
+            dd($exception);
         }
         return redirect()->route('pacientes.show', $id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //
+    }
+
+
+    // METODOS SECUNDARIOS
+
+    // getPacienteOfID: Sirve para SHOW y EDIT, nos devuelve una vista con toda la informacion del paciente
+    // incluso el nombre de su obra social, para poder mostrarla.
+    private function getPacienteOfID($id){
+        $paciente = DB::selectOne(
+            'SELECT p.*, os.nombre as os_nombre
+            FROM pacientes as p
+            INNER JOIN obras_sociales as os
+            on p.obra_social_FK = os.id
+            WHERE p.id = ?', [$id]
+        );
+        return $paciente;
+    }
+
+    // Retorna la lista de obras sociales para poder mapearla en el formulario
+    private function getObrasSociales(){
+        return DB::select(
+            'SELECT * FROM obras_sociales'
+        );
+    }
+
+    private function formPacienteValidation(Request $request){
+        return Validator::make($request->post(), [
+            'nombre' => ['required','max:30'],
+            'apellido' => ['required','max:30'],
+            'dni' => ['required','digits:8'], //'digits_between:8,8'
+            'telefono' => ['required', 'digits_between:8,10'],
+            'email' => ['required','max:50','email'],
+            'categoria_os' => ['required','max:15'],
+            'numero_afiliado' => ['required','max:30'],
+            'calle' => ['required','max:30'],
+            'n_calle' => ['required','digits_between:0,5'],
+            'localidad' => ['required','max:25'],
+            'f_nacimiento' => ['required'],
+            'genero' => ['required'],
+            'obrasocial' => ['required']
+        ])->validate();
+
     }
 
     public function search(Request $request) {

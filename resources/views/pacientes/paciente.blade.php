@@ -18,10 +18,7 @@
 
     @if (isset($show))
 
-        @section('title-form')
-            FORMULARIO DE INFORMACIÓN DE USUARIO
-        @endsection
-
+        @section('title-form') FORMULARIO DE INFORMACIÓN DE USUARIO @endsection
         @section('botones')
         <div class="container  ms-xl-5 px-xl-4 my-5">
             <button class="col-12 px-5 px-md-0 col-md-2 btn btn-primary fw-bold fs-5">Editar</button>
@@ -29,26 +26,22 @@
         @endsection
 
     @elseif (isset($edit))
-
-        @section('title-form')
-            FORMULARIO DE MODIFICACIÓN DE DATOS
-        @endsection
-
+        @section('title-form') FORMULARIO DE MODIFICACIÓN DE DATOS @endsection
         @section('botones')
-
-        <div class="container  ms-xl-5 px-xl-4 my-5">
-            <a href="{{ route('pacientes.show',$paciente->id) }}" class="col-12 px-5 px-md-0 col-md-2 btn btn-danger fw-bold fs-5">Cancelar</a>
-            <button class="col-12 px-5 px-md-0 col-md-2 ms-md-5 my-4 my-md-0 btn btn-primary fw-bold fs-5">Guardar</button>
-        </div>
-
-
-
+            <div class="container  ms-xl-5 px-xl-4 my-5">
+                <a href="{{ route('pacientes.show',$paciente->id) }}" class="col-12 px-5 px-md-0 col-md-2 btn btn-danger fw-bold fs-5">Cancelar</a>
+                <button class="col-12 px-5 px-md-0 col-md-2 ms-md-5 my-4 my-md-0 btn btn-primary fw-bold fs-5">Guardar</button>
+            </div>
         @endsection
 
     @elseif (isset($create))
 
-        @section('title-form')
-            FORMULARIO DE CREACIÓN DE PACIENTE
+        @section('title-form') FORMULARIO DE CREACIÓN DE PACIENTE @endsection
+        @section('botones')
+            <div class="container  ms-xl-5 px-xl-4 my-5">
+                <a href="{{ route('pacientes.index') }}" class="col-12 px-5 px-md-0 col-md-2 btn btn-danger fw-bold fs-5">Cancelar</a>
+                <button class="col-12 px-5 px-md-0 col-md-2 ms-md-5 my-4 my-md-0 btn btn-primary fw-bold fs-5">Crear</button>
+            </div>
         @endsection
 
     @endif
@@ -93,7 +86,7 @@
 
             <fieldset class="col-md-6 mt-4 px-xl-5">
                 <label for="nombre" class="fs-5 mb-1">NOMBRE COMPLETO</label>
-                <div class="input__form d-flex">
+                <div class="input__form d-flex @if($errors->has('nombre')) border-danger @endif">
                     <div class="input-icon d-flex justify-content-center align-items-center">
                         <img src="{{ \Illuminate\Support\Facades\URL::asset('/images/form_paciente/form_user.svg') }}"
                         alt="icono de correo electronico" class="">
@@ -110,13 +103,18 @@
                             @endif
                         >
                 </div>
+                @foreach ($errors->get('nombre') as $message)
+                    <p class="text-danger my-2 rounded-lg fs-6">
+                        * {{ $message }}
+                    </p>
+                @endforeach
             </fieldset>
 
             <fieldset class="col-md-6 mt-4 px-xl-5">
                 <label for="apellido" class="fs-5 d-block mb-1">APELLIDO</label>
                 <input type="text" name="apellido" id="apellido"
                     placeholder="Ingrese su apellido"
-                    class="input__form fs-5 ps-2 outline-0 w-100"
+                    class="input__form fs-5 ps-2 outline-0 w-100 @if($errors->has('apellido')) border-danger @endif"
                     @if (isset($show) || isset($edit))
                         value="{{$paciente->apellido}}"
                     @else
@@ -124,13 +122,18 @@
                     @endif
                     @if(isset($show))
                         disabled
-                    @endif
-                >
+                    @endif>
+
+                    @foreach ($errors->get('apellido') as $message)
+                        <p class="text-danger my-2 rounded-lg fs-6">
+                            * {{ $message }}
+                        </p>
+                    @endforeach
             </fieldset>
 
             <fieldset class="col-md-6 mt-4 px-xl-5">
                 <label for="email" class="fs-5 mb-1">EMAIL</label>
-                <div class="input__form d-flex">
+                <div class="input__form d-flex @if($errors->has('email')) border-danger @endif">
                     <div class="input-icon d-flex justify-content-center align-items-center">
                         <img src="{{ \Illuminate\Support\Facades\URL::asset('/images/form_paciente/form_email.svg') }}"
                         alt="icono de correo electronico" class="">
@@ -146,30 +149,33 @@
                         @endif
                     >
                 </div>
+                @foreach ($errors->get('email') as $message)
+                    <p class="text-danger my-2 rounded-lg fs-6">
+                        * {{ $message }}
+                    </p>
+                @endforeach
             </fieldset>
 
             <fieldset class="col-md-6 mt-4 px-xl-5">
                 <label for="genero" class="fs-5 d-block mb-1">GENERO</label>
-                <select type="text" name="genero" id="genero" placeholder="Ingrese su nombre" class="input__form fs-5 ps-2 w-100 outline-0 input__form"
-                @if (isset($show) || isset($edit))
-                    {{-- value="{{$paciente->telefono1}}" --}}
-                @else
-                    value="{{ old('genero')}}"
-                @endif
-                @if(isset($show))
-                    disabled
-                @endif
-                >
+                <select type="text" name="genero" id="genero" placeholder="Ingrese su nombre"
+                class="input__form fs-5 ps-2 w-100 outline-0 input__form @if($errors->has('genero')) border-danger @endif"
+                @if(isset($show)) disabled @endif>
                     <option value="">Eliga una opción...</option>
-                    <option value="1">Masculino</option>
-                    <option value="2">Femenino</option>
-                    <option value="3">Otro</option>
+                    <option @if(isset($paciente) && $paciente->genero == 'Masculino') selected @endif value="Masculino">Masculino</option>
+                    <option @if(isset($paciente) && $paciente->genero == 'Femenino') selected @endif value="Femenino">Femenino</option>
+                    <option @if(isset($paciente) && $paciente->genero == 'Otro') selected @endif value="Otro">Otro</option>
                 </select>
+                @foreach ($errors->get('genero') as $message)
+                    <p class="text-danger my-2 rounded-lg fs-6">
+                        * {{ $message }}
+                    </p>
+                @endforeach
             </fieldset>
 
             <fieldset class="col-md-3 mt-4 px-xl-5">
                 <label for="dni" class="fs-5 mb-1">DNI</label>
-                <div class="input__form d-flex">
+                <div class="input__form d-flex @if($errors->has('dni')) border-danger @endif">
                     <div class="input-icon d-flex justify-content-center align-items-center">
                         <img src="{{ \Illuminate\Support\Facades\URL::asset('/images/form_paciente/form_dni.svg') }}"
                         alt="icono de correo electronico" class="">
@@ -185,25 +191,36 @@
                         @endif
                     >
                 </div>
+                @foreach ($errors->get('dni') as $message)
+                    <p class="text-danger my-2 rounded-lg fs-6">
+                        * {{ $message }}
+                    </p>
+                @endforeach
             </fieldset>
 
             <fieldset class="col-md-3 mt-4 px-xl-5">
-                <label for="nacimiento" class="fs-5 d-block mb-1">NACIMIENTO</label>
-                <input type="date" name="nacimiento" id="nacimiento" placeholder="Ingrese su nombre" class="input__form fs-5 ps-2 outline-0 w-100"
+                <label for="f_nacimiento" class="fs-5 d-block mb-1">NACIMIENTO</label>
+                <input type="date" name="f_nacimiento" id="f_nacimiento" placeholder="Ingrese su nombre"
+                class="input__form fs-5 ps-2 outline-0 w-100 @if($errors->has('f_nacimiento')) border-danger @endif"
                 @if (isset($show) || isset($edit))
-                    {{-- value="{{$paciente->telefono1}}" --}}
+                    value="{{$paciente->f_nacimiento}}"
                 @else
-                    value="{{ old('nacimiento')}}"
+                    value="{{ old('f_nacimiento')}}"
                 @endif
                 @if(isset($show))
                     disabled
                 @endif
                 >
+                @foreach ($errors->get('f_nacimiento') as $message)
+                    <p class="text-danger my-2 rounded-lg fs-6">
+                        * {{ $message }}
+                    </p>
+                @endforeach
             </fieldset>
 
             <fieldset class="col-md-6 mt-4 px-xl-5">
                 <label for="telefono" class="fs-5 mb-1">NÚMERO DE CELULAR</label>
-                <div class="input__form d-flex">
+                <div class="input__form d-flex @if($errors->has('telefono')) border-danger @endif">
                     <div class="input-icon d-flex justify-content-center align-items-center">
                         <img src="{{ \Illuminate\Support\Facades\URL::asset('/images/form_paciente/form_phone.svg') }}"
                         alt="icono de correo electronico" class="">
@@ -219,94 +236,125 @@
                         @endif
                 >
                 </div>
+                @foreach ($errors->get('telefono') as $message)
+                    <p class="text-danger my-2 rounded-lg fs-6">
+                        * {{ $message }}
+                    </p>
+                @endforeach
             </fieldset>
 
             <fieldset class="col-md-6 mt-4 px-xl-5">
-                <label for="direccion" class="fs-5 mb-1">NOMBRE DE CALLE</label>
-                <div class="input__form d-flex">
+                <label for="calle" class="fs-5 mb-1">NOMBRE DE CALLE</label>
+                <div class="input__form d-flex @if($errors->has('calle')) border-danger @endif">
                     <div class="input-icon d-flex justify-content-center align-items-center">
                         <img src="{{ \Illuminate\Support\Facades\URL::asset('/images/form_paciente/form_map.svg') }}"
                         alt="icono de correo electronico" class="">
                     </div>
-                    <input type="text" name="direccion" id="direccion" placeholder="Por ejemplo, 25 de mayo" class="outline-0 border-0 ht-48 w-100 fs-5 ps-2"
+                    <input type="text" name="calle" id="calle" placeholder="Por ejemplo, 25 de mayo" class="outline-0 border-0 ht-48 w-100 fs-5 ps-2"
                         @if (isset($show) || isset($edit))
-                            value="{{$paciente->direccion}}"
+                            value="{{$paciente->calle}}"
                         @else
-                            value="{{ old('direccion')}}"
+                            value="{{ old('calle')}}"
                         @endif
                         @if(isset($show))
                             disabled
-                        @endif
-                    >
+                        @endif>
                 </div>
+                @foreach ($errors->get('calle') as $message)
+                    <p class="text-danger my-2 rounded-lg fs-6">
+                        * {{ $message }}
+                    </p>
+                @endforeach
             </fieldset>
 
             <fieldset class="col-md-3 mt-4 px-xl-5">
-                <label for="numero_calle" class="fs-5 d-block mb-1">NÚMERO</label>
-                <input type="text" name="numero_calle" id="numero_calle" placeholder="N° Domicilio" class="input__form fs-5 ps-2 outline-0 w-100"
+                <label for="n_calle" class="fs-5 d-block mb-1">NÚMERO</label>
+                <input type="text" name="n_calle" id="n_calle" placeholder="N° Domicilio"
+                class="input__form fs-5 ps-2 outline-0 w-100 @if($errors->has('n_calle')) border-danger @endif"
                 @if (isset($show) || isset($edit))
-                    {{-- value="{{$paciente->direccion}}" --}}
+                    value="{{$paciente->n_calle}}"
                 @else
-                    value="{{ old('numero_calle')}}"
+                    value="{{ old('n_calle')}}"
                 @endif
                 @if(isset($show))
                     disabled
                 @endif
                 >
+
+                @foreach ($errors->get('n_calle') as $message)
+                    <p class="text-danger my-2 rounded-lg fs-6">
+                        * {{ $message }}
+                    </p>
+                @endforeach
             </fieldset>
 
             <fieldset class="col-md-3 mt-4 px-xl-5">
                 <label for="localidad" class="fs-5 d-block mb-1">LOCALIDAD</label>
-                <input type="text" name="localidad" id="localidad" placeholder="Lanús, Lomas..." class="input__form fs-5 ps-2 outline-0 w-100"
+                <input type="text" name="localidad" id="localidad" placeholder="Lanús, Lomas..."
+                class="input__form fs-5 ps-2 outline-0 w-100 @if($errors->has('localidad')) border-danger @endif"
                 @if (isset($show) || isset($edit))
-                    {{-- value="{{$paciente->direccion}}" --}}
+                    value="{{$paciente->localidad}}"
                 @else
                     value="{{ old('localidad')}}"
                 @endif
-                @if(isset($show))
-                    disabled
-                @endif
-                >
+                @if(isset($show)) disabled @endif >
+
+                @foreach ($errors->get('localidad') as $message)
+                    <p class="text-danger my-2 rounded-lg fs-6">
+                        * {{ $message }}
+                    </p>
+                @endforeach
             </fieldset>
 
             <fieldset class="col-md-6 mt-4 px-xl-5">
                 <label for="obrasocial" class="fs-5 mb-1">OBRA SOCIAL</label>
-                <div class="input__form d-flex">
+                <div class="input__form d-flex @if($errors->has('obrasocial')) border-danger @endif">
                     <div class="input-icon d-flex justify-content-center align-items-center">
                         <img src="{{ \Illuminate\Support\Facades\URL::asset('/images/form_paciente/form_obrasocial.svg') }}"
                         alt="icono de correo electronico" class="">
                     </div>
-                    <input type="text" name="obrasocial" id="obrasocial" placeholder="Obra social a la cual pertenece" class="outline-0 border-0 ht-48 w-100 fs-5 ps-2"
-                    @if (isset($show) || isset($edit))
-                        {{-- value="{{$paciente->direccion}}" --}}
-                    @else
-                        value="{{ old('obrasocial')}}"
-                    @endif
-                    @if(isset($show))
-                        disabled
-                    @endif
-                    >
+                    <select type="text" name="obrasocial" id="obrasocial" placeholder="Eliga su obra social" class="border-0 fs-5 ps-2 w-100 outline-0"
+                    @if(isset($show)) disabled @endif>
+                        <option value="">Eliga una obra social...</option>
+                        @foreach ($obrasSociales as $obraSocial)
+                            <option @if(isset($paciente) && $paciente->os_nombre == $obraSocial->nombre) selected @endif
+                                value="{{$obraSocial->id}}">{{$obraSocial->nombre}}</option>
+                        @endforeach
+                    </select>
+
                 </div>
+
+                @foreach ($errors->get('obrasocial') as $message)
+                    <p class="text-danger my-2 rounded-lg fs-6">
+                        * {{ $message }}
+                    </p>
+                @endforeach
             </fieldset>
 
             <fieldset class="col-md-3 mt-4 px-xl-5">
                 <label for="categoria_os" class="fs-5 d-block mb-1">PLAN</label>
-                <input type="text" name="categoria_os" id="categoria_os" placeholder="Tú plan" class="input__form fs-5 ps-2 outline-0 w-100"
-
+                <input type="text" name="categoria_os" id="categoria_os" placeholder="Tú plan"
+                class="input__form fs-5 ps-2 outline-0 w-100 @if($errors->has('categoria_os')) border-danger @endif"
                     @if (isset($show) || isset($edit))
                         value="{{$paciente->categoria_os}}"
                     @else
                         value="{{ old('categoria_os')}}"
                     @endif
-                    @if(isset($show))
-                        disabled
-                    @endif
-            >
+
+                    @if(isset($show)) disabled @endif
+                    >
+                    @foreach ($errors->get('categoria_os') as $message)
+                        <p class="text-danger my-2 rounded-lg fs-6">
+                            * {{ $message }}
+                        </p>
+                    @endforeach
+
             </fieldset>
 
             <fieldset class="col-md-3 mt-4 px-xl-5">
                 <label for="numero_afiliado" class="fs-5 d-block mb-1">N° DE SOCIO</label>
-                <input type="text" name="numero_afiliado" id="numero_afiliado" placeholder="Tú N° de Socio" class="input__form fs-5 ps-2 outline-0 w-100"
+                <input type="text" name="numero_afiliado" id="numero_afiliado" placeholder="Tú N° de Socio"
+                class="input__form fs-5 ps-2 outline-0 w-100 @if($errors->has('numero_afiliado')) border-danger @endif"
                     @if (isset($show) || isset($edit))
                         value="{{$paciente->numero_afiliado}}"
                     @else
@@ -316,6 +364,11 @@
                         disabled
                     @endif
                 >
+                @foreach ($errors->get('numero_afiliado') as $message)
+                    <p class="text-danger my-2 rounded-lg fs-6">
+                        * {{ $message }}
+                    </p>
+                @endforeach
             </fieldset>
 
 
@@ -333,12 +386,20 @@
     @endsection
 
 
+{{-- EN CASO DE SER ADMINISTRADOR/SECRETARIO Y NO ENCONTRAR EL RECURSO --}}
+
 @else
-    @section('titulo')
-        No disponible
-    @endsection
 
     @section('contenido')
-        Recurso no disponible .
+        <div class="d-flex align-items-center justify-content-center vh-100">
+            <div class="text-center">
+                <h1 class="display-1 fw-bold">404</h1>
+                <p class="fs-3"> <span class="text-danger">Opps!</span> Pagina no encontrada.</p>
+                <p class="lead">
+                    No se encontró el recurso solicitado
+                </p>
+                <a href="{{route('home.view')}}" class="btn btn-primary">Volver a inicio</a>
+            </div>
+        </div>
     @endsection
 @endif
