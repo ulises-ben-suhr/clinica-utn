@@ -17,24 +17,40 @@
     @endsection
 
     @if (isset($show))
+
         @section('title-form')
             FORMULARIO DE INFORMACIÓN DE USUARIO
         @endsection
+
         @section('botones')
-            <button class="col-8 col-md-auto btn btn-success rounded-0 px-5 mx-auto me-md-3 me-xl-5 fw-bold fs-5 mt-5 mb-4 ms-auto">Editar</button>
+        <div class="container  ms-xl-5 px-xl-4 my-5">
+            <button class="col-12 px-5 px-md-0 col-md-2 btn btn-primary fw-bold fs-5">Editar</button>
+        </div>
         @endsection
+
     @elseif (isset($edit))
+
         @section('title-form')
             FORMULARIO DE MODIFICACIÓN DE DATOS
         @endsection
+
         @section('botones')
-            <button class="col-8 offset-md-7 col-md-2 btn btn-danger px-5 fw-bold fs-5 mt-5 mb-4 ">Cancelar</button>
-            <button class="col-8 offset-md-1 col-md-2 btn btn-success px-5 fw-bold fs-5 mt-5 mb-4 ">Guardar</button>
+
+        <div class="container  ms-xl-5 px-xl-4 my-5">
+            <a href="{{ route('pacientes.show',$paciente->id) }}" class="col-12 px-5 px-md-0 col-md-2 btn btn-danger fw-bold fs-5">Cancelar</a>
+            <button class="col-12 px-5 px-md-0 col-md-2 ms-md-5 my-4 my-md-0 btn btn-primary fw-bold fs-5">Guardar</button>
+        </div>
+
+
+
         @endsection
+
     @elseif (isset($create))
+
         @section('title-form')
             FORMULARIO DE CREACIÓN DE PACIENTE
         @endsection
+
     @endif
 
 

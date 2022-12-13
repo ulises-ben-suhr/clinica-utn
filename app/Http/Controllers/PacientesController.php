@@ -14,7 +14,8 @@ class PacientesController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('v-alcance-pacientes');
+        $this->middleware('v-alcance-pacientes')->except(['edit','show','update']);
+        $this->middleware('v-datos-personales')->only(['edit','show','update']);
         $this->middleware('can:puede_borrar_pacientes')->only(['pacientes']);
     }
 
@@ -142,32 +143,32 @@ class PacientesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return 'Actualizando';
-        // try {
-        //     DB::transaction(function() use($request) {
-        //         DB::update(
-        //             'UPDATE pacientes
-        //             SET nombre = ?, apellido = ?,
-        //                 dni = ?, direccion = ?,
-        //                 telefono1 = ?, email = ?,
-        //                 categoria_os = ?, numero_afiliado = ?
-        //             WHERE dni = ?', [
-        //                 $request -> post('nombre'),
-        //                 $request -> post('apellido'),
-        //                 $request -> post('dni'),
-        //                 $request -> post('direccion'),
-        //                 $request -> post('telefono'),
-        //                 $request -> post('email'),
-        //                 $request -> post('categoria_os'),
-        //                 $request -> post('numero_afiliado'),
-        //                 $request -> post('dni'),
-        //             ]
-        //         );
-        //     });
-        //     redirect(route('pacientes.index'));
-        // }
-        // catch(\Exception $exception) {
-        // }
+        try {
+            DB::transaction(function() use($request,$id) {
+                DB::update(
+                    'UPDATE pacientes
+                    SET nombre = ?, apellido = ?,
+                        dni = ?, direccion = ?,
+                        telefono1 = ?, email = ?,
+                        categoria_os = ?, numero_afiliado = ?
+                    WHERE id = ?', [
+                        $request -> post('nombre'),
+                        $request -> post('apellido'),
+                        $request -> post('dni'),
+                        $request -> post('direccion'),
+                        $request -> post('telefono'),
+                        $request -> post('email'),
+                        $request -> post('categoria_os'),
+                        $request -> post('numero_afiliado'),
+                        $id,
+                    ]
+                );
+            });
+            // redirect(route('pacientes.show', $id));
+        }
+        catch(\Exception $exception) {
+        }
+        return redirect()->route('pacientes.show', $id);
     }
 
     /**

@@ -6,15 +6,19 @@
         </h2>
 
         <p class="col-12 col-md-auto my-1 my-sm-auto ms-sm-auto ">
-            @foreach ($links as $key => $value)
-                @if ($key != (sizeof($links) - 1))
-                    <a href="{{route($value->ruta)}}"
-                        class="text-decoration-none text-secondary">
-                        {{$value->titulo}}</a> /
-                @else
-                    <a href="" class="text-decoration-none text-primary">{{$value->titulo}}</a>
-                @endif
-            @endforeach
+
+            @if (!is_null(Auth::user()) && Auth::user()->rol != 'PACIENTE')
+                @foreach ($links as $key => $value)
+                    @if ($key != (sizeof($links) - 1))
+                        <a href="{{route($value->ruta)}}"
+                            class="text-decoration-none text-secondary">
+                            {{$value->titulo}}</a> /
+                    @else
+                        <a href="" class="text-decoration-none text-primary">{{$value->titulo}}</a>
+                    @endif
+                @endforeach
+            @endif
+
         </p>
     </div>
 

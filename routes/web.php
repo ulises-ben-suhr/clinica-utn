@@ -51,7 +51,7 @@ Route::post('/turnos', [
 
 
 Route::resource('pacientes', \App\Http\Controllers\PacientesController::class)
-    ->only(['index','store','update','show','create','edit']);
+    ->only(['index','store','update','show','create','edit','destroy']);
 
 
 Route::post('/pacientesRecepcionados', [\App\Http\Controllers\PacientesController:: class, 'recepcionDePaciente'])
