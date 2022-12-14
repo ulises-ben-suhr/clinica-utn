@@ -15,6 +15,7 @@
     @stack('home-styles')
     @stack('services-styles')
     @stack('institucional-styles')
+    @stack('login-styles')
 
     @yield('styles')
 
@@ -72,7 +73,7 @@
                                 <li><a class="dropdown-item" href="{{ route('pacientes.show',session('pacienteID',0)->paciente_id) }}">Mis datos personales</a></li>
                                 <li><hr class="dropdown-divider"></li>
                             @endif
-                            <li><a class="dropdown-item" href="#">Cambiar contraseña</a></li>
+                            <li><a class="dropdown-item" href="{{route('login.edit', Auth::user()->id)}}">Cambiar contraseña</a></li>
                         </ul>
                     </div>
 

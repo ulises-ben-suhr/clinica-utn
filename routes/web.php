@@ -76,8 +76,15 @@ Route::get('/admin', function() {
 
 
 // -------- SESIONES --------
+
 Route::resource('/login', \App\Http\Controllers\LoginController::class)
     ->only(['index', 'store']);
+
+Route::get('/login/{id}/edit', [\App\Http\Controllers\LoginController::class, 'edit'])
+    ->middleware('auth')->middleware('v-user-password')->name('login.edit');
+
+Route::put('/login/{id}', [\App\Http\Controllers\LoginController::class, 'update'])
+    ->middleware('auth')->middleware('v-user-password')->name('login.update');
 
 Route::post('/logout', [
     \App\Http\Controllers\LoginController::class, 'destroy'
@@ -90,6 +97,9 @@ Route::get('/registro', [
 Route::post('/registro', [
     \App\Http\Controllers\RegisterController::class, 'store'
 ]) -> name('register.store');
+
+
+// -------- CONFIGURACION DE USUARIO --------
 
 // -------- PRUEBAS --------
 Route::get('/hora', function () {

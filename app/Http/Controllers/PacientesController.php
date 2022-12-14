@@ -195,7 +195,7 @@ class PacientesController extends Controller
             'calle' => ['required','max:30'],
             'n_calle' => ['required','digits_between:0,5'],
             'localidad' => ['required','max:25'],
-            'f_nacimiento' => ['required'],
+            'f_nacimiento' => ['required','before_or_equal:'.Date('Y-m-d')],
             'genero' => ['required'],
             'obrasocial' => ['required']
         ])->validate();

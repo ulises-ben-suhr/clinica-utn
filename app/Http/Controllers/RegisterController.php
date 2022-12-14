@@ -4,13 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
     public function create() {
         // Nos dirige a la pantalla de creación de usuario
-        return view('inicial/register');
+        if(is_null(Auth::user())){
+            return view('inicial/register');
+        }
+        return redirect(route('home.view'));
+
     }
 
     public function store(Request $request) {

@@ -24,7 +24,7 @@ return [
     'alpha_num' => 'El campo :attribute solo puede contener letras y números.',
     'array' => 'El campo :attribute debe ser un arreglo (Lista).',
     'before' => 'El campo:attribute debe ser una fecha anterior a :date.',
-    'before_or_equal' => 'El campo :attribute debe ser una fecha anterior o igual a :date.',
+    'before_or_equal' => 'Debe ser una fecha anterior o igual al dia de hoy.',
     'between' => [
         'array' => 'El campo :attribute debe tener entre :min y :max elementos.',
         'file' => 'El campo :attribute debe tener un peso entre :min y :max kilobytes.',
@@ -32,7 +32,7 @@ return [
         'string' => 'El campo :attribute debe tener entre :min y :max caracteres.',
     ],
     'boolean' => 'El campo :attribute solo puede ser verdadero o falso.',
-    'confirmed' => 'El campo de confirmación :attribute no coincide.',
+    'confirmed' => 'Las contraseñas no coinciden.',
     'current_password' => 'La contraseña es incorrecta.',
     'date' => 'El campo :attribute no es una fecha válida.',
     'date_equals' => 'El campo :attribute debe ser una fecha igual a :date.',
