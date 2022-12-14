@@ -50,7 +50,7 @@
 
     @section('contenido')
         @include('layout.template-title-section', [
-            'titulo' => 'datos personales',
+            'titulo' => $titulo,
             'links' => [
                 (object) array(
                     'titulo' => 'Inicio',

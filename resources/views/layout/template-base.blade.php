@@ -35,57 +35,54 @@
                 <li><a href="#" class="nav-link px-2 link-dark text-secondary">contacto</a></li>
             </ul>
 
-            @if( is_null(Auth::user()) )
+        @auth
+            <div id="registro" class="col-12 col-xl-auto d-flex justify-content-center gap-4 text-end">
+                <div class="btn-desplegable btn-group">
+                    <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
+                    Acciones
+                    </button>
+                    <ul class="dropdown-menu">
+
+                        @if (Auth::user()->rol == 'PACIENTE')
+                            <li><a class="dropdown-item " href="#">Mi Resumen</a></li>
+                            <li><a class="dropdown-item " href="#">Programar un turno</a></li>
+                        @endif
+
+                        @if (Auth::user()->rol != 'PACIENTE')
+                            <li><a class="dropdown-item " href="{{route('pacientes.index')}}">Ver pacientes</a></li>
+                            @if(Auth::user()->rol == 'ADMINISTRADOR')
+                                <li><a class="dropdown-item " href="#">Administrar usuarios</a></li>
+                            @endif
+                        @endif
+
+                    </ul>
+                </div>
+
+                <div class="btn-desplegable btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
+                    Mi Cuenta
+                    </button>
+                    <ul class="dropdown-menu">
+                        @if (Auth::user()->rol == 'PACIENTE')
+                            <li><a class="dropdown-item" href="{{ route('pacientes.show',session('pacienteID',0)->paciente_id) }}">Mis datos personales</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                        @endif
+                        <li><a class="dropdown-item" href="{{route('login.edit', Auth::user()->id)}}">Cambiar contraseña</a></li>
+                    </ul>
+                </div>
+
+
+                <form id="form-logout" action="{{route('log.out')}}" class="d-inline-block top-0 end-0" method="POST">
+                    @csrf
+                    <button class="btn text-primary text-wrap underline">Cerrar sesión</button>
+                </form>
+            </div>
+        @else
                 <div id="registro" class="col-md-5 text-end">
                     <a href="{{ route('login.index') }}" class="btn btn-outline-primary me-2">ingresar</a>
                     <a  href="{{ route('register.create') }}" class="btn btn-primary">registrarse</a>
                 </div>
-            @else
-
-                <div id="registro" class="col-12 col-xl-auto d-flex justify-content-center gap-4 text-end">
-                    <div class="btn-desplegable btn-group">
-                        <button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
-                        Acciones
-                        </button>
-                        <ul class="dropdown-menu">
-
-                            @if (Auth::user()->rol == 'PACIENTE')
-                                <li><a class="dropdown-item " href="#">Mi Resumen</a></li>
-                                <li><a class="dropdown-item " href="#">Programar un turno</a></li>
-                            @endif
-
-                            @if (Auth::user()->rol != 'PACIENTE')
-                                <li><a class="dropdown-item " href="{{route('pacientes.index')}}">Ver pacientes</a></li>
-                                @if(Auth::user()->rol == 'ADMINISTRADOR')
-                                    <li><a class="dropdown-item " href="#">Administrar usuarios</a></li>
-                                @endif
-                            @endif
-
-                        </ul>
-                    </div>
-
-                    <div class="btn-desplegable btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="true">
-                        Mi Cuenta
-                        </button>
-                        <ul class="dropdown-menu">
-                            @if (Auth::user()->rol == 'PACIENTE')
-                                <li><a class="dropdown-item" href="{{ route('pacientes.show',session('pacienteID',0)->paciente_id) }}">Mis datos personales</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                            @endif
-                            <li><a class="dropdown-item" href="{{route('login.edit', Auth::user()->id)}}">Cambiar contraseña</a></li>
-                        </ul>
-                    </div>
-
-                    {{-- <a href="#" class="btn btn-outline-primary me-2">Mi cuenta</a> --}}
-                    <form id="form-logout" action="{{route('log.out')}}" class="d-inline-block top-0 end-0" method="POST">
-                        @csrf
-                        <button class="btn text-primary text-wrap underline">Cerrar sesión</button>
-                    </form>
-                </div>
-
-            @endif
-
+        @endauth
 
 
         </header>

@@ -14,18 +14,48 @@ class TurnosController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        $turnos = DB::select('SELECT fecha_turno, estado, paciente, doctor, especialidad, horario FROM turnos');
-
+        $turnos = DB::select(
+            'SELECT fecha_turno, estado, paciente, doctor, especialidad, horario FROM turnos'
+        );
 
         return view('turnos', [
             "turnos" => $turnos
+        ]);
+    }
+
+    public function indexTurnosPaciente($username) {
+        $fechaActual = Carbon::now() -> toDateString();
+
+        $turnos = DB::select(
+            'SELECT fecha_turno, horario, doctor, especialidad, estado FROM turnos
+            INNER JOIN usuarios ON usuarios.pacienteFK = turnos.paciente_FK
+            WHERE usuarios.username = ? ', [$username]
+        );
+
+        $turnosVigentes = array_filter($turnos, function($turno) use($fechaActual) {
+            return $turno -> fecha_turno >= $fechaActual &&
+                $turno -> estado == 'activo';
+        });
+        $turnosViejos = array_filter($turnos, function($turno) use($fechaActual) {
+            return $turno -> fecha_turno < $fechaActual ||
+                $turno -> estado != 'activo';
+        });
+
+        $paciente = DB::selectOne(
+            'SELECT nombre, apellido, dni, email, telefono1, categoria_os, numero_afiliado FROM pacientes
+            INNER JOIN usuarios ON pacientes.id = usuarios.pacienteFK
+            WHERE usuarios.username = ?', [$username]
+        );
+
+//        dd($paciente);
+
+        return view('/pacientes/homePaciente', [
+            'turnosVigentes' => $turnosVigentes,
+            'turnosViejos' => $turnosViejos,
+            'paciente' => $paciente
         ]);
     }
 
@@ -52,11 +82,15 @@ class TurnosController extends Controller
      */
     public function store(Request $request)
     {
+        $idPaciente = DB::selectOne(
+            'SELECT id FROM pacientes WHERE dni = ?', [$request -> query('dni')]
+        );
+
         try {
-            DB::transaction(function() use($request) {
+            DB::transaction(function() use($request, $idPaciente) {
                 DB::insert(
-                    'INSERT into turnos (fecha_turno, horario, paciente, doctor, fecha_solicitud, estado, especialidad, dni_paciente)
-                    values (?,?,?,?,?,?,?,?)', [
+                    'INSERT into turnos (fecha_turno, horario, paciente, doctor, fecha_solicitud, estado, especialidad, dni_paciente, paciente_FK)
+                    values (?, ?, ?, ?, ?, ?, ?, ?, ?)', [
                         $request -> post('fecha_turno'),
                         $request -> post('horario'),
                         "{$request -> query('apellido')} {$request -> query('nombre')}",
@@ -64,7 +98,8 @@ class TurnosController extends Controller
                         Carbon::now() -> toDateString(),
                         'activo',
                         $request -> post('especialidad'),
-                        $request -> query('dni')
+                        $request -> query('dni'),
+                        $idPaciente -> id
                     ]
                 );
             });

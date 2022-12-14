@@ -53,6 +53,7 @@ class PacientesController extends Controller
 
         return view('pacientes.paciente',[
             'create' => true,
+            'titulo' => 'CREACIÓN DE PACIENTE',
             'seccion' => 'Crear paciente',
             'obrasSociales' => $obrasSociales
         ]);
@@ -95,6 +96,7 @@ class PacientesController extends Controller
         return view('pacientes.paciente',[
             'paciente' => $pacienteBuscado,
             'show' => true,
+            'titulo' => 'DATOS PERSONALES',
             'seccion' => 'Informacion Paciente',
             'obrasSociales' => $obrasSociales
         ]);
@@ -110,6 +112,7 @@ class PacientesController extends Controller
         return view('pacientes.paciente',[
             'paciente' => $pacienteBuscado,
             'edit' => true,
+            'titulo' => 'CAMBIO DE DATOS PERSONALES',
             'seccion' => 'Modificar paciente',
             'obrasSociales' => $obrasSociales
         ]);

@@ -1,5 +1,9 @@
 @extends('layout.template-base')
 
+@section('titulo')
+    Institucional
+@endsection
+
 @push('institucional-styles')
     <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\URL::asset('css/institucional.css') }}">
 @endpush
