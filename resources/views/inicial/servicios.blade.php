@@ -1,5 +1,9 @@
 @extends('layout.template-base')
 
+@section('titulo')
+    Servicios
+@endsection
+
 @push('services-styles')
     <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\URL::asset('css/servicios.css') }}">
 @endpush

@@ -66,6 +66,10 @@
     border: 1px solid #000;
 }
 
+.border-red{
+    border: 1px solid rgb(252, 41, 41);
+}
+
 .input-icon{
     height: 48px;
     width: 50px;

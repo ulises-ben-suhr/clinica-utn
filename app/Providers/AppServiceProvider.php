@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+
+        Gate::define('puede_borrar_pacientes', function($usuario){
+            return $usuario->rol == 'ADMINISTRADOR';
+        });
+        Gate::define('puede_programar_turnos', function(){
+            return true;
+        });
     }
 }

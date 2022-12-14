@@ -27,3 +27,22 @@ main#login {
     padding-bottom: 40px;
     background-color: #f5f5f5;
 }
+
+.btn-desplegable:hover ul{
+    display: block;
+}
+
+.btn-desplegable ul{
+    top: 100%;
+}
+
+#form-logout{
+    position: absolute;
+}
+
+@media (min-width: 1200px) {
+    #form-logout{
+        position: static;
+    }
+}
+

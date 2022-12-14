@@ -1,5 +1,9 @@
 @extends('layout.template-base')
 
+@section('titulo')
+    Inicio
+@endsection
+
 @push('home-styles')
     <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\URL::asset('css/home.css') }}">
 @endpush

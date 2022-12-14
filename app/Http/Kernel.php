@@ -2,6 +2,9 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\VerificacionDatosPersonales;
+use App\Http\Middleware\VerificacionDeAlcancePacientes;
+use App\Http\Middleware\VerificacionUserForPassword;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -63,5 +66,8 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'v-alcance-pacientes' => VerificacionDeAlcancePacientes::class,
+        'v-datos-personales' => VerificacionDatosPersonales::class,
+        'v-user-password' => VerificacionUserForPassword::class
     ];
 }

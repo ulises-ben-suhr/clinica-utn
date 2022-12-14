@@ -16,7 +16,7 @@
         'links' => [
             (object) array(
                 'titulo' => 'Inicio',
-                'ruta' => 'home.index'
+                'ruta' => 'home.view'
             ),
             (object) array(
                 'titulo' => 'Pacientes',
@@ -57,10 +57,7 @@
             </section>
 
             <section class="row justify-content-between my-5 my-lg-4 align-items-center ">
-                <a href="{{ route('pacientes.create') }}" class=" col-11 col-md-auto rounded-0 text-center d-flex align-items-center justify-content-center btn btn-success mx-3 sansbold">Añadir un nuevo paciente</a>
-                <nav aria-label="..." class="col-11 col-md-6 col-xxl-5 p-2 mx-3 d-flex align-items-center" >
-
-                </nav>
+                <a href="{{ route('pacientes.create') }}" class=" col-11 col-md-auto text-center d-flex align-items-center justify-content-center btn btn-success mx-3 sansbold">Crear paciente</a>
             </section>
 
         </section>
@@ -114,15 +111,17 @@
                                         Ver
                                 </a>
 
-                                <a href="#" class="btn btn-primary sansbold py-0 pe-2 rounded-1 d-flex align-items-center">
+                                <a href="{{route('pacientes.edit', $paciente->id)}}" class="btn btn-primary sansbold py-0 pe-2 rounded-1 d-flex align-items-center">
                                     <img src="./images/edit.svg" alt="" srcset="" class="me-2">
                                         Modificar
                                 </a>
 
-                                <button class="btn btn-danger sansbold py-0 pe-2 rounded-1 d-flex align-items-center">
-                                    <img src="./images/trash.svg" alt="" srcset="" class="me-2">
-                                        Remover
-                                </button>
+                                @can('puede_borrar_pacientes')
+                                    <button class="btn btn-danger sansbold py-0 pe-2 rounded-1 d-flex align-items-center">
+                                        <img src="./images/trash.svg" alt="" srcset="" class="me-2">
+                                            Remover
+                                    </button>
+                                @endcan
                             </div>
 
                             <div class="d-flex gap-4 d-lg-none ">
