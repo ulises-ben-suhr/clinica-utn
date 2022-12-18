@@ -15,7 +15,6 @@
     @stack('home-styles')
     @stack('services-styles')
     @stack('institucional-styles')
-    @stack('login-styles')
 
     @yield('styles')
 
@@ -44,7 +43,7 @@
                     <ul class="dropdown-menu">
 
                         @if (Auth::user()->rol == 'PACIENTE')
-                            <li><a class="dropdown-item " href="#">Mi Resumen</a></li>
+                            <li><a class="dropdown-item " href="{{route('turnos.unPaciente')}}">Mi Resumen</a></li>
                             <li><a class="dropdown-item " href="#">Programar un turno</a></li>
                         @endif
 

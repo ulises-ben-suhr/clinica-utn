@@ -18,20 +18,19 @@ class RegisterController extends Controller
 
     }
 
-    public function store(Request $request) {
-        // Guarda el usuario en la tabla correspondiente
-
+    public function store(Request $request, $idPacienteFK) {
         try {
-            DB::transaction(function() use($request) {
+            DB::transaction(function() use($request, $idPacienteFK) {
                 DB::insert(
-                    'INSERT INTO usuarios (username, password) VALUES (?, ?)', [
+                    'INSERT INTO usuarios (username, password, pacienteFK, rol) VALUES (?, ?, ?, ?)', [
                         $request -> post('usuario'),
-                        Hash::make($request -> post('contrasenia'))
+                        Hash::make($request -> post('contrasenia')),
+                        $idPacienteFK,
+                        'PACIENTE'
                     ]
                 );
             });
-
-            return redirect(route('login.index'));
+//            return redirect(route('login.index'));
         }
         catch (\Exception $exception) {
             dd($exception);

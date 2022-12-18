@@ -20,9 +20,6 @@ class LoginController extends Controller
 
 
     public function store(Request $request) {
-        // Acá vienen todas las validaciones pertinentes
-
-
         if (Auth::attempt([
             'username' => $request -> post('usuario'),
             'password' => $request -> post('contrasenia')

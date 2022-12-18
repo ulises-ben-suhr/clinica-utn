@@ -12,6 +12,7 @@
 
     <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\URL::asset('css/generales-inicio.css') }}">
     @stack('login-styles')
+    @stack('register-styles')
     @stack('user-home')
 
 </head>

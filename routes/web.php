@@ -46,6 +46,10 @@ Route::post('/turnos', [
     \App\Http\Controllers\TurnosController::class, 'store'
 ]) -> name('turno.store');
 
+Route::get('/pacientes/{username}', [
+    \App\Http\Controllers\TurnosController::class, 'indexTurnosPaciente'
+]) -> name('turnos.unPaciente');
+
 
 // -------- PACIENTES --------
 
@@ -57,8 +61,16 @@ Route::resource('pacientes', \App\Http\Controllers\PacientesController::class)
 Route::post('/pacientesRecepcionados', [\App\Http\Controllers\PacientesController:: class, 'recepcionDePaciente'])
     -> name('pacientesRecepcionados.store');
 
-Route::post('/pacientesRegistrados', [\App\Http\Controllers\PacientesController::class, 'registroDePaciente'])
-    -> name('pacientesRegistrados.store');
+// Cuando un usuario se registra en la plataforma, en el formulario de registro va a tener:
+//  1. Datos de registro (usuario y contraseña) -> Le pega a la tabla de usuarios
+//  2. Datos de paciente (nombre, apellido, dni, obra social, etc) -> Le pega a la tabla de pacientes
+// Como necesito pegarle a dos controladores distintos, esta función hace de paso intermedio
+
+Route::post('/pacientesRegistrados',[
+    \App\Http\Controllers\PacientesController::class, 'registroDePaciente'
+]) -> name('pacientesRegistrados.store');
+
+
 
 
 // Este search busca un DNI de paciente en la DB
@@ -103,6 +115,6 @@ Route::post('/registro', [
 
 // -------- PRUEBAS --------
 Route::get('/hora', function () {
-    return view('header');
-    //return \Carbon\Carbon:: now() -> toDateString();
-});
+//    return view('header');
+    return \Carbon\Carbon:: now() -> toDateString();
+}) -> name('prueba');
