@@ -46,7 +46,7 @@ Route::post('/turnos', [
     \App\Http\Controllers\TurnosController::class, 'store'
 ]) -> name('turno.store');
 
-Route::get('/pacientes/{username}', [
+Route::get('/pacientes/turnos', [
     \App\Http\Controllers\TurnosController::class, 'indexTurnosPaciente'
 ]) -> name('turnos.unPaciente');
 

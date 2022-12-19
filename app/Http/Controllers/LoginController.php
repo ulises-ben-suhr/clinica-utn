@@ -27,15 +27,11 @@ class LoginController extends Controller
             // Si coincide creamos la sesión
             $request -> session() -> regenerate();
 
-
             if($request->user()->rol == 'PACIENTE'){
                 $this->pacienteIdOnSession($request);
             }
-
-            return redirect()->route('home.view');
-
+            return redirect()->route('home.view', ['username' => $request -> post('usuario')]);
         }
-
         else {
             dd($request); die();
             return back() -> withErrors([

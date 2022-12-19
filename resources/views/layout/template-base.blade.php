@@ -43,12 +43,13 @@
                     <ul class="dropdown-menu">
 
                         @if (Auth::user()->rol == 'PACIENTE')
-                            <li><a class="dropdown-item " href="{{route('turnos.unPaciente')}}">Mi Resumen</a></li>
+{{--         {{  route('turnos.unPaciente') }}    --}}
+                            <li><a class="dropdown-item " href="{{  route('turnos.unPaciente',session('pacienteID',0) -> paciente_id)  }}">Mi Resumen</a></li>
                             <li><a class="dropdown-item " href="#">Programar un turno</a></li>
                         @endif
 
                         @if (Auth::user()->rol != 'PACIENTE')
-                            <li><a class="dropdown-item " href="{{route('pacientes.index')}}">Ver pacientes</a></li>
+                            <li><a class="dropdown-item " href="{{  route('pacientes.index')  }}">Ver pacientes</a></li>
                             @if(Auth::user()->rol == 'ADMINISTRADOR')
                                 <li><a class="dropdown-item " href="#">Administrar usuarios</a></li>
                             @endif

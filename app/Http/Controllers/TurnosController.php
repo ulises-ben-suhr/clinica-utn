@@ -26,13 +26,17 @@ class TurnosController extends Controller
         ]);
     }
 
-    public function indexTurnosPaciente($username) {
+    public function indexTurnosPaciente(Request $request) {
+//        dd($request -> session() -> get('pacienteID'));
+        $pacienteID = $request -> session() -> get('pacienteID');
+//        dd($pacienteID -> paciente_id);
+
         $fechaActual = Carbon::now() -> toDateString();
 
         $turnos = DB::select(
             'SELECT fecha_turno, horario, doctor, especialidad, estado FROM turnos
-            INNER JOIN usuarios ON usuarios.pacienteFK = turnos.paciente_FK
-            WHERE usuarios.username = ? ', [$username]
+            INNER JOIN pacientes ON turnos.paciente_FK = pacientes.id
+            WHERE pacientes.id = ? ', [$pacienteID -> paciente_id]
         );
 
         $turnosVigentes = array_filter($turnos, function($turno) use($fechaActual) {
@@ -46,8 +50,7 @@ class TurnosController extends Controller
 
         $paciente = DB::selectOne(
             'SELECT nombre, apellido, dni, email, telefono1, categoria_os, numero_afiliado FROM pacientes
-            INNER JOIN usuarios ON pacientes.id = usuarios.pacienteFK
-            WHERE usuarios.username = ?', [$username]
+            WHERE id = ?', [$pacienteID -> paciente_id]
         );
 
 //        dd($paciente);
