@@ -15,24 +15,10 @@
             <input type="text" class="form-control" id="floatingInput" name="usuario" placeholder="Usuario">
             <label for="floatingInput">Usuario</label>
         </div>
-
-
         <div class="form-floating">
             <input type="password" class="form-control" id="floatingPassword" name="contrasenia" placeholder="Contraseña">
             <label for="floatingPassword">Contraseña</label>
         </div>
-
-        @foreach ($errors->get('usuario') as $message)
-            <p class="text-danger my-2 rounded-lg fs-5">
-                * {{ $message }}
-            </p>
-        @endforeach
-
-        @foreach ($errors->get('contrasenia') as $message)
-            <p class="text-danger my-2 rounded-lg fs-5">
-                * {{ $message }}
-            </p>
-        @endforeach
 
         <button class="w-100 btn btn-lg btn-primary" type="submit">Ingresar!</button>
         <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
