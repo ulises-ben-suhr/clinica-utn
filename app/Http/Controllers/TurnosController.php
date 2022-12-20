@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\entities\Turno;
+use Illuminate\Http\Response;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,13 +19,15 @@ class TurnosController extends Controller
 
     public function index()
     {
-        $turnos = DB::select(
-            'SELECT fecha_turno, estado, paciente, doctor, especialidad, horario FROM turnos'
-        );
+        // $turnos = DB::select(
+        //     'SELECT fecha_turno, estado, paciente, doctor, especialidad, horario FROM turnos'
+        // );
 
-        return view('turnos', [
-            "turnos" => $turnos
-        ]);
+        // return view('turnos', [
+        //     "turnos" => $turnos
+        // ]);
+
+        return view('turnos.ajax');
     }
 
     public function indexTurnosPaciente($username) {
@@ -154,4 +158,20 @@ class TurnosController extends Controller
     {
         //
     }
+
+    //METODO AJAX TURNOS
+    public function getPatientShifts(Request $request){
+        $month = $request->post('monthCalender');
+        $year = $request->post('yearCalender');
+        $id = Auth::user()->rol == 'PACIENTE' ? session('pacienteID',0)->paciente_id : 0;
+        $turnos = DB::select(
+            'SELECT * FROM turnos WHERE fecha_turno LIKE :fecha AND paciente_FK = :id',[
+                'fecha' => $year.'-'.$month.'-%',
+                'id' => $id
+                ]
+        );
+        return response(json_encode($turnos),200)->header('Content-type','text/plain');
+    }
+
+
 }

@@ -160,7 +160,7 @@ class PacientesController extends Controller
 
     public function destroy($id)
     {
-        //
+
     }
 
 

@@ -68,7 +68,7 @@
         ])
 
         <section class="container">
-            <form class="row shadow d-flex justify-content-evenly flex-wrap form" @if (isset($show)) method='GET' action="{{route('pacientes.edit', $paciente->id)}}"
+            <form class="row shadow border d-flex justify-content-evenly flex-wrap form" @if (isset($show)) method='GET' action="{{route('pacientes.edit', $paciente->id)}}"
             @elseif (isset($edit)) method="POST" action="{{route('pacientes.update', $paciente->id)}}"
             @elseif (isset($create)) method="POST" action="{{route('pacientes.store')}}" @endif>
 

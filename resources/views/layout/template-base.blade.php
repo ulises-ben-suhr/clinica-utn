@@ -9,14 +9,14 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="icon" type="image/x-icon" href="{{ \Illuminate\Support\Facades\URL::asset('images/Logo1.png') }}">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\URL::asset('css/generales-inicio.css') }}">
     @stack('home-styles')
     @stack('services-styles')
     @stack('institucional-styles')
     @stack('login-styles')
-
     @yield('styles')
 
 </head>
@@ -44,8 +44,8 @@
                     <ul class="dropdown-menu">
 
                         @if (Auth::user()->rol == 'PACIENTE')
-                            <li><a class="dropdown-item " href="#">Mi Resumen</a></li>
-                            <li><a class="dropdown-item " href="#">Programar un turno</a></li>
+                            <li><a class="dropdown-item " href="{{route('turno.index')}}">Mis Turnos</a></li>
+                            <li><a class="dropdown-item " href="{{route('turno.create')}}">Programar un turno</a></li>
                         @endif
 
                         @if (Auth::user()->rol != 'PACIENTE')
@@ -104,6 +104,7 @@
             <span class="mb-3 mb-md-0 text-muted">&copy; 2022 UTN Salud</span>
         </div>
     </footer>
+
 
     @yield('scripts')
 

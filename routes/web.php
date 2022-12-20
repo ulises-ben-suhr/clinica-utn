@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TurnosController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,10 @@ Route::get('/turnos/create', [
 Route::post('/turnos', [
     \App\Http\Controllers\TurnosController::class, 'store'
 ]) -> name('turno.store');
+
+Route::post('/turnosDate',[
+    TurnosController::class, 'getPatientShifts'
+]) ->name('turno.data');
 
 
 // -------- PACIENTES --------

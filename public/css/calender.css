@@ -1,0 +1,64 @@
+.calender-box{
+    height: 70px;
+    border: 1px solid rgb(223, 223, 223);
+}
+
+.calender-box-null{
+    height: 70px;
+    border: 1px solid rgb(223, 223, 223);
+}
+
+.calender-box:hover{
+    outline: 1px solid rgb(145, 145, 145);
+    cursor: pointer;
+}
+
+.calender-box-item{
+    width: fit-content;
+    height: auto;
+}
+
+.border-right{
+    border-right: 1px solid rgb(77, 77, 77);
+}
+
+.border-left{
+    border-left: 1px solid rgb(77, 77, 77);
+}
+
+.rounded-right{
+    border-top-right-radius: 5px;
+}
+
+.rounded-left{
+    border-top-left-radius: 5px;
+}
+
+.he-3{
+    height: 30px;
+}
+
+.modal{
+    transition: all 1s;
+}
+
+.modal-helper{
+    background-color: rgba(0, 0, 0, .5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: none;
+}
+
+@media (min-width: 500px) {
+    .calender-box{
+        height: 100px;
+    }
+    
+    .calender-box-null{
+        height: 100px;
+    }
+}
