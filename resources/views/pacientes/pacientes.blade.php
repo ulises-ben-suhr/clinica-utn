@@ -96,10 +96,10 @@
                                         <img src="./images/calendario_plus.svg"  alt="" srcset="">
                                         Programar turno
                                     </a>
-                                    <button type="button" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
+                                    {{-- <button type="button" class="list-group-item list-group-item-action d-flex align-items-center gap-2">
                                         <img src="./images/list.svg"  alt="" srcset="">
                                         Listado de turnos
-                                    </button>
+                                    </button> --}}
                                 </div>
                             </nav>
                         </td>
@@ -116,12 +116,12 @@
                                         Modificar
                                 </a>
 
-                                @can('puede_borrar_pacientes')
+                                {{-- @can('puede_borrar_pacientes')
                                     <button class="btn btn-danger sansbold py-0 pe-2 rounded-1 d-flex align-items-center">
                                         <img src="./images/trash.svg" alt="" srcset="" class="me-2">
                                             Remover
                                     </button>
-                                @endcan
+                                @endcan --}}
                             </div>
 
                             <div class="d-flex gap-4 d-lg-none ">

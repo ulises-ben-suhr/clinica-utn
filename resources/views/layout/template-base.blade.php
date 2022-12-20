@@ -32,7 +32,7 @@
                 <li><a href="{{ route('home.view') }}" class="nav-link px-2 link-dark text-secondary">inicio</a></li>
                 <li><a href="{{ route('servicios.view') }}" class="nav-link px-2 link-dark text-secondary">servicios</a></li>
                 <li><a href="{{ route('institucional.view') }}" class="nav-link px-2 link-dark text-secondary">institucional</a></li>
-                <li><a href="#" class="nav-link px-2 link-dark text-secondary">contacto</a></li>
+                {{-- <li><a href="#" class="nav-link px-2 link-dark text-secondary">contacto</a></li> --}}
             </ul>
 
         @auth
@@ -50,9 +50,6 @@
 
                         @if (Auth::user()->rol != 'PACIENTE')
                             <li><a class="dropdown-item " href="{{route('pacientes.index')}}">Ver pacientes</a></li>
-                            @if(Auth::user()->rol == 'ADMINISTRADOR')
-                                <li><a class="dropdown-item " href="#">Administrar usuarios</a></li>
-                            @endif
                         @endif
 
                     </ul>

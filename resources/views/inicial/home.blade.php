@@ -12,11 +12,11 @@
 
     <section id="home-hero">
         <div class="cristal hero--title text-center pt-3 pb-4">
-            <h1 class="display-1 text-white">Bienvenido a UTN Salud</h1>
-            <small class="lead text-primary">El centro de salud para el estudiante tecnológico</small>
+            <h1 class="display-1 text-dark fw-bold">Bienvenido a UTN Salud</h1>
+            <small class="lead text-primary fw-bold fs-4">El centro de salud para el estudiante tecnológico</small>
         </div>
 
-        <div class="cristal hero--text py-3">
+        <div class="cristal hero--text py-3 text-center fw-bold">
             <p>Salud UTN es un proyecto con fines didácticos propuesto por un grupo de estudiantes en el curso de formación Full Stack impartido por profesores del área de Sistemas de la Universidad Tecnológica Nacional regional Buenos Aires</p>
             <p>El sitio está construido en Laravel</p>
         </div>

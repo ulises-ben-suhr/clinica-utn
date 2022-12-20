@@ -1,8 +1,8 @@
 @extends('layout.template-base')
 
 
-@section('title')
-    Prueba
+@section('titulo')
+    Mis Turnos
 @endsection
 
 @section('styles')

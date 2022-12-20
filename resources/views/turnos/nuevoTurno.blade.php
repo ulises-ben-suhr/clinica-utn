@@ -1,17 +1,28 @@
-<!doctype html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-</head>
-<body id="body">
+@extends('layout.template-base')
 
-<form action="{{ route('turno.store', ['nombre' => $nombre, 'apellido' => $apellido, 'dni' => $dni]) }}" method="POST">
+
+@section('titulo')
+    Nuevo turno
+@endsection
+
+@section('styles')
+    <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\URL::asset('css/calender.css') }}">
+    <link rel="stylesheet" href="{{ \Illuminate\Support\Facades\URL::asset('css/pacientes.css') }}">
+@endsection
+
+
+@section('contenido')
+
+@include('layout.template-title-section', [
+    'titulo' => 'Nuevo Turno',
+    'links' => []
+])
+
+<form class="container pb-3 my-5 shadow" action="{{ route('turno.store', ['nombre' => $nombre, 'apellido' => $apellido, 'dni' => $dni]) }}" method="POST">
     @csrf
+    <div class="fs-5 px-xl-5 py-2 ms-0 shadow-form-title border-bottom border-primary border-3">
+        FORMULARIO DE NUEVO TURNO
+    </div>
     <fieldset>
         <legend>Datos del paciente:</legend>
         <label for="nombre">Nombre: </label>
@@ -70,7 +81,7 @@
 
     <p>Los campos marcados con (*) son obligatorios</p>
 
-    <input type="submit" value="Agendar!">
+    <input class="btn btn-primary" type="submit" value="Agendar!">
 </form>
 
 
@@ -252,5 +263,5 @@
 
 </script>
 
-</body>
-</html>
+@endsection
+
