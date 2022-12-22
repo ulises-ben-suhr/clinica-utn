@@ -3,9 +3,18 @@ body {
     height: calc(100vh - 96.8px - 80px);
 }
 
+body::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+body::-webkit-scrollbar:vertical {
+    width:0px;
+}
+
 .logo {
     height: clamp(32px, 2.5vw, 64px);
 }
+
 
 .logo-small {
     height: 32px;

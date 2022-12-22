@@ -51,7 +51,7 @@
     </div>
   </div>
 
-<table class="table table-fit container px-sm-0">
+<table class="table table-fit container px-sm-0 mb-5">
 
     <thead class="bg-dark text-white">
         <tr class="">
