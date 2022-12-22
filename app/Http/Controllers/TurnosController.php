@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\entities\Turno;
+use Illuminate\Http\Response;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,6 +19,10 @@ class TurnosController extends Controller
 
     public function index()
     {
+
+        if(Auth::user()->rol == 'PACIENTE'){
+            return view('turnos.ajax');
+        }else{
         $turnos = DB::select(
             'SELECT fecha_turno, estado, paciente, doctor, especialidad, horario FROM turnos'
         );
@@ -24,6 +30,9 @@ class TurnosController extends Controller
         return view('turnos', [
             "turnos" => $turnos
         ]);
+        }
+
+
     }
 
     public function indexTurnosPaciente($username) {
@@ -64,14 +73,29 @@ class TurnosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $paciente)
+    public function create(Request $request)
     {
-//        dd($paciente); die();
-        return view('/turnos/nuevoTurno', [
-            'nombre' => $paciente -> get('nombre'),
-            'apellido'=> $paciente -> get('apellido'),
-            'dni' => $paciente -> get('dni')
-        ]);
+        $idPaciente = Auth::user()->rol == 'PACIENTE' ? session('pacienteID',0)->paciente_id : 0;
+
+        if($idPaciente != 0){
+            $paciente = DB::selectOne(
+                'SELECT nombre,apellido,dni FROM pacientes WHERE id = :id',['id' => $idPaciente]
+            );
+            return view('/turnos/nuevoTurno', [
+                'nombre' => $paciente->nombre,
+                'apellido'=> $paciente->apellido,
+                'dni' => $paciente -> dni
+            ]);
+        }else{
+            return view('/turnos/nuevoTurno', [
+                'nombre' => $request -> get('nombre'),
+                'apellido'=> $request -> get('apellido'),
+                'dni' => $request -> get('dni')
+            ]);
+        }
+
+
+
     }
 
     /**
@@ -82,9 +106,14 @@ class TurnosController extends Controller
      */
     public function store(Request $request)
     {
-        $idPaciente = DB::selectOne(
-            'SELECT id FROM pacientes WHERE dni = ?', [$request -> query('dni')]
-        );
+
+        $idPaciente = Auth::user()->rol == 'PACIENTE' ? session('pacienteID',0)->paciente_id : 0;
+
+        if($idPaciente == 0){
+            $idPaciente = DB::selectOne(
+                'SELECT id FROM pacientes WHERE dni = ?', [$request -> query('dni')]
+            )->id;
+        };
 
         try {
             DB::transaction(function() use($request, $idPaciente) {
@@ -99,11 +128,11 @@ class TurnosController extends Controller
                         'activo',
                         $request -> post('especialidad'),
                         $request -> query('dni'),
-                        $idPaciente -> id
+                        $idPaciente
                     ]
                 );
             });
-            redirect(route('turno.index'));
+            return redirect(route('turno.index'));
         }
         catch (\Exception $exception) {
             dd($exception);
@@ -154,4 +183,20 @@ class TurnosController extends Controller
     {
         //
     }
+
+    //METODO AJAX TURNOS
+    public function getPatientShifts(Request $request){
+        $month = $request->post('monthCalender');
+        $year = $request->post('yearCalender');
+        $id = Auth::user()->rol == 'PACIENTE' ? session('pacienteID',0)->paciente_id : 0;
+        $turnos = DB::select(
+            'SELECT * FROM turnos WHERE fecha_turno LIKE :fecha AND paciente_FK = :id',[
+                'fecha' => $year.'-%'.$month.'-%',
+                'id' => $id
+                ]
+        );
+        return response(json_encode($turnos),200)->header('Content-type','text/plain');
+    }
+
+
 }

@@ -40,7 +40,6 @@ class LoginController extends Controller
         }
 
         else {
-            dd($request); die();
             return back() -> withErrors([
                 'usuario' => 'El nombre de usuario no existe en la base de datos.',
                 'contrasenia' => 'La contraseña no coincide con el nombre de usuario ingresado.'

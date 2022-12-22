@@ -27,7 +27,7 @@
     ])
 
         <section class="container my-5">
-            <form class="row shadow d-flex justify-content-evenly flex-wrap form"
+            <form class="row border shadow d-flex justify-content-evenly flex-wrap form"
                 method='POST' action="{{route('login.update', Auth::user()->id)}}">
 
             @csrf
